@@ -23,8 +23,8 @@
   <view class="selected-note">{{inviteMode ? '该邀请仅供租客填写 · 房东可查看并管理本房间全部资料' : '将进入' + roleLabel + '端 · ' + roleSummary}}</view>
 
   <view class="login-actions" data-od-id="login-actions">
-    <button class="btn btn-primary full pressable" hover-class="button-hover" loading="{{loading}}" disabled="{{loading}}" bindtap="wechatLogin" data-od-id="wechat-login">微信快捷登录</button>
-    <button class="btn btn-plain full pressable" hover-class="button-hover" bindtap="continueWithoutWechat" data-od-id="continue-without-wechat">不授权昵称，继续</button>
+    <button class="btn btn-primary full pressable" hover-class="button-hover" loading="{{loading}}" disabled="{{loading}}" bindtap="wechatLogin" data-od-id="wechat-login">微信登录</button>
+    <button class="btn btn-plain full pressable" hover-class="button-hover" disabled="{{loading}}" bindtap="continueWithoutWechat" data-od-id="continue-without-wechat">不授权昵称，仍用微信登录</button>
   </view>
-  <view class="privacy-note">登录代表你同意仅将微信昵称用于当前身份展示；正式绑定关系由房东邀请或租约确认后建立。</view>
+  <view class="privacy-note">登录时会验证当前微信身份；昵称和头像仅在你授权后用于展示。微信 AppSecret 只保存在服务端。</view>
 </view>
