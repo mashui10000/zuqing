@@ -6,11 +6,6 @@
     <text class="status status-paid">已登录</text>
   </view>
   <button class="btn btn-plain full pressable" hover-class="button-hover" bindtap="switchIdentity" data-od-id="switch-identity">切换身份或退出</button>
-  <view class="section-title">使用帮助</view>
-  <view class="surface card" data-od-id="landlord-help-list">
-  <view class="list-row pressable" hover-class="button-hover" bindtap="openRoomCreate" aria-role="button" aria-label="新增房间与收费"><view><view>新增房间与收费</view><text class="muted">填写月租、押金、水费与电费单价</text></view><text class="arrow">›</text></view>
-  <view class="list-row pressable" hover-class="button-hover" bindtap="openGuide" aria-role="button" aria-label="查看房东操作指南"><view><view>房东操作指南</view><text class="muted">查看完整的收租操作顺序</text></view><text class="arrow">›</text></view>
-  </view>
   <view class="section-title">数据与迁移</view>
   <view class="surface card">
   <view class="list-row pressable" hover-class="button-hover" bindtap="copyBackup" aria-role="button" aria-label="导出本地备份"><view><view>导出本地备份</view><text class="muted">复制 JSON，可迁移到新设备</text></view><text class="arrow">›</text></view>
@@ -21,9 +16,11 @@
 
   <view wx:if="{{showImport}}" class="scrim" bindtap="closeImport">
     <view class="sheet" catchtap="stop" data-od-id="restore-sheet">
-      <view class="sheet-handle"></view><view class="sheet-title">导入本地备份</view>
-      <textarea class="field field-area backup-area" placeholder="粘贴之前导出的 JSON 数据" value="{{backupText}}" bindinput="updateBackup"></textarea>
-      <button class="btn btn-primary full pressable" hover-class="button-hover" bindtap="importBackup">校验并恢复</button>
+      <view class="sheet-handle"></view>
+      <view class="between import-head"><view class="sheet-title">导入本地备份</view><button class="clipboard-action pressable" hover-class="button-hover" bindtap="readBackupFromClipboard">读取剪贴板</button></view>
+      <textarea class="field field-area backup-area" maxlength="-1" placeholder="粘贴之前导出的完整 JSON 数据" value="{{backupText}}" bindinput="updateBackup"></textarea>
+      <text class="backup-hint">已读取 {{backupText.length}} 个字符</text>
+      <button class="btn btn-primary full pressable" hover-class="button-hover" bindtap="importBackup" disabled="{{!backupText}}">校验并恢复</button>
     </view>
   </view>
 </view>

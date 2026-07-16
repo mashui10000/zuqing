@@ -963,10 +963,31 @@ function setRole(role) {
 }
 function exportBackup() { return JSON.stringify(getState()) }
 function importBackup(text) {
-  const parsed = JSON.parse(text)
-  if (!parsed || parsed.version !== DATA_VERSION || !Array.isArray(parsed.properties)) throw new Error('备份格式不正确')
-  save(parsed)
-  return parsed
+  let parsed
+  try {
+    parsed = JSON.parse(String(text || '').trim())
+  } catch (error) {
+    throw new Error('备份内容不完整，请重新复制')
+  }
+  if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.properties)) throw new Error('备份格式不正确')
+  const sourceVersion = Number(parsed.version || 1)
+  if (sourceVersion > DATA_VERSION) throw new Error('备份版本较新，请先更新小程序')
+
+  const current = initialize()
+  const defaults = initialState()
+  const restored = Object.assign({}, defaults, parsed, {
+    version: DATA_VERSION,
+    profile: Object.assign({}, defaults.profile, parsed.profile || {}),
+    settings: Object.assign({}, defaults.settings, parsed.settings || {}),
+    auth: current.auth && current.auth.loggedIn ? current.auth : Object.assign({}, defaults.auth, parsed.auth || {}),
+    currentRole: current.auth && current.auth.loggedIn ? current.currentRole : (parsed.currentRole || defaults.currentRole),
+    cloudUserId: current.cloudUserId || String(parsed.cloudUserId || '')
+  })
+  ;['properties', 'tenants', 'readings', 'bills', 'checkouts', 'tenantInvites', 'pendingMessages'].forEach((key) => {
+    if (!Array.isArray(restored[key])) restored[key] = []
+  })
+  save(restored)
+  return restored
 }
 function reset() { return save(initialState()) }
 

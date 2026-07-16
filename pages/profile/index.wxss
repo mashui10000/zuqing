@@ -6,4 +6,8 @@
 .identity-name { margin-bottom: 7rpx; font-size: 30rpx; font-weight: 720; }
 .identity-card .muted { font-size: 22rpx; line-height: 1.45; }
 .full { width: 100%; margin-top: 18rpx; }
+.import-head { align-items: flex-start; }
+.import-head .sheet-title { margin-bottom: 18rpx; }
+.clipboard-action { min-height: 64rpx; padding: 0 10rpx; border: 0; background: transparent; color: var(--primary); font-size: 24rpx; line-height: 64rpx; }
 .backup-area { min-height: 280rpx; font-family: "SFMono-Regular", Menlo, monospace; font-size: 22rpx; }
+.backup-hint { display: block; margin-top: 10rpx; color: var(--muted); font-size: 21rpx; }

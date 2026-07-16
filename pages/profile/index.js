@@ -24,18 +24,55 @@ Page({
       success: (result) => { if (result.confirm) auth.signOut() }
     })
   },
-  openGuide() { wx.navigateTo({ url: '/pages/guide/index' }) },
-  openRoomCreate() { wx.navigateTo({ url: '/pages/room/form/index' }) },
   copyBackup() {
-    wx.setClipboardData({ data: backend.exportBackup(), success: () => wx.showToast({ title: '备份已复制', icon: 'success' }) })
+    const backup = backend.exportBackup()
+    wx.setClipboardData({
+      data: backup,
+      success: () => wx.showToast({ title: '备份已复制', icon: 'success' }),
+      fail: () => wx.showToast({ title: '复制失败，请重试', icon: 'none' })
+    })
   },
   openImport() { this.setData({ showImport: true, backupText: '' }) },
   closeImport() { this.setData({ showImport: false }) },
   stop() {},
   updateBackup(event) { this.setData({ backupText: event.detail.value }) },
+  readBackupFromClipboard() {
+    wx.getClipboardData({
+      success: (result) => {
+        const backupText = String(result.data || '').trim()
+        if (!backupText) {
+          wx.showToast({ title: '剪贴板没有备份', icon: 'none' })
+          return
+        }
+        this.setData({ backupText })
+        wx.showToast({ title: '已读取备份', icon: 'success' })
+      },
+      fail: () => wx.showToast({ title: '读取剪贴板失败', icon: 'none' })
+    })
+  },
   importBackup() {
-    try { backend.importBackup(this.data.backupText); this.setData({ showImport: false }); this.load(); wx.showToast({ title: '数据已恢复', icon: 'success' }) }
-    catch (error) { wx.showToast({ title: error.message, icon: 'none' }) }
+    const backupText = String(this.data.backupText || '').trim()
+    if (!backupText) {
+      wx.showToast({ title: '请先粘贴备份', icon: 'none' })
+      return
+    }
+    wx.showModal({
+      title: '确认恢复备份',
+      content: '备份会覆盖当前设备上的房间、租客、读数和账单，当前登录身份保持不变。',
+      confirmText: '确认恢复',
+      success: (result) => {
+        if (!result.confirm) return
+        try {
+          backend.importBackup(backupText)
+          getApp().setSession(backend.getSession())
+          this.setData({ showImport: false, backupText: '' })
+          this.load()
+          wx.showToast({ title: '数据已恢复', icon: 'success' })
+        } catch (error) {
+          wx.showToast({ title: error.message || '备份恢复失败', icon: 'none' })
+        }
+      }
+    })
   },
   reset() {
     wx.showModal({ title: '清空全部数据', content: '房间、租客、读数、账单和收款记录将全部删除，此操作不可撤销。', confirmText: '确认清空', confirmColor: '#D70015', success: (result) => { if (result.confirm) { backend.reset(); getApp().setSession(backend.getSession()); wx.reLaunch({ url: '/pages/login/index' }) } } })
