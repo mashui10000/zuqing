@@ -1,0 +1,2 @@
+.refund-card { margin-top: 18rpx; padding: 30rpx; display: flex; align-items: flex-end; justify-content: space-between; }
+.full { width: 100%; margin-top: 18rpx; }

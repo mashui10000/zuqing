@@ -1,0 +1,34 @@
+<view class="page-shell" data-od-id="meter-entry">
+  <view class="page-head">
+    <view><text class="eyebrow">按房间自动结转月份</text><view class="page-title">水电抄表</view><view class="page-subtitle">{{completed}} / {{rooms.length}} 间已完成；收款后自动进入下一月并带入上期读数。</view></view>
+  </view>
+  <view class="progress head-progress"><view class="progress-bar" style="width: {{rooms.length ? completed / rooms.length * 100 : 0}}%"></view></view>
+  <view wx:for="{{rooms}}" wx:key="id" class="surface meter-card {{activeId === item.id ? 'active' : ''}}" data-od-id="meter-{{item.id}}">
+    <view class="between meter-head">
+      <view><view class="room-title">{{item.propertyName}} · {{item.roomName}}</view><text class="muted">{{item.tenantName}} · 本期 {{item.month}} · 上期 {{item.previousMonth}}</text></view>
+      <text class="status {{item.saved ? 'status-paid' : 'status-draft'}}">{{item.saved ? '已完成' : (item.currentSaved ? '待补上月' : '待录入')}}</text>
+    </view>
+    <view class="meter-reading-group">
+      <view class="meter-kind">水表</view>
+      <view class="reading-pair">
+        <view wx:if="{{item.previousSaved}}"><text class="label">上月读数 · 自动带入</text><view class="field reading-readonly"><text class="mono">{{item.previousWater}}</text><text class="auto-mark">已带入</text></view></view>
+        <view wx:else><text class="label">上月读数 · 首次补填</text><input class="field field-input mono" type="digit" placeholder="填写一次即可" value="{{item.previousWater}}" data-index="{{index}}" data-key="previousWater" bindinput="updateValue" /></view>
+        <view><text class="label">本月读数</text><input class="field field-input mono" type="digit" placeholder="填写本月读数" value="{{item.water}}" data-index="{{index}}" data-key="water" bindinput="updateValue" /></view>
+      </view>
+    </view>
+    <view class="meter-reading-group">
+      <view class="meter-kind">电表</view>
+      <view class="reading-pair">
+        <view wx:if="{{item.previousSaved}}"><text class="label">上月读数 · 自动带入</text><view class="field reading-readonly"><text class="mono">{{item.previousElectric}}</text><text class="auto-mark">已带入</text></view></view>
+        <view wx:else><text class="label">上月读数 · 首次补填</text><input class="field field-input mono" type="digit" placeholder="填写一次即可" value="{{item.previousElectric}}" data-index="{{index}}" data-key="previousElectric" bindinput="updateValue" /></view>
+        <view><text class="label">本月读数</text><input class="field field-input mono" type="digit" placeholder="填写本月读数" value="{{item.electric}}" data-index="{{index}}" data-key="electric" bindinput="updateValue" /></view>
+      </view>
+    </view>
+    <view class="between other-row">
+      <text class="muted">其他费用</text>
+      <input class="small-input mono" type="digit" placeholder="0" value="{{item.otherFee}}" data-index="{{index}}" data-key="otherFee" bindinput="updateValue" />
+    </view>
+    <button class="btn btn-secondary btn-sm pressable save-btn" hover-class="button-hover" data-index="{{index}}" bindtap="saveRoom">{{item.currentSaved ? '更新本月读数和账单' : '保存并生成本月账单'}}</button>
+  </view>
+  <view wx:if="{{!rooms.length}}" class="empty">暂无在租房间，请先在房间资料中登记租客。</view>
+</view>

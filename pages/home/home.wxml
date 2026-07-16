@@ -1,0 +1,73 @@
+<view class="page-shell home-shell" data-od-id="landlord-dashboard">
+  <view class="safe-top" style="height: {{headerInset}}px"></view>
+  <view class="compact-head" style="height: {{headerHeight}}px; padding-right: {{headerRightInset}}px">
+    <text class="compact-brand">租清</text>
+    <text class="compact-title">收租，一眼看清</text>
+  </view>
+
+  <view class="surface hero-card" data-od-id="collection-summary">
+    <view class="between">
+      <view>
+        <text class="label">本月已收</text>
+        <view class="metric mono">¥{{dashboard.received}}</view>
+      </view>
+      <view class="collection-rate">{{dashboard.occupiedCount}} / {{dashboard.roomCount}} 间在租</view>
+    </view>
+    <view class="progress"><view class="progress-bar" style="width: {{dashboard.receivable ? dashboard.received / dashboard.receivable * 100 : 0}}%"></view></view>
+    <view class="between summary-foot">
+      <text class="muted">应收 ¥{{dashboard.receivable}}</text>
+      <text wx:if="{{dashboard.overdueCount}}" class="warning-text">{{dashboard.overdueCount}} 笔已逾期</text>
+      <text wx:else class="success-text">本月无逾期</text>
+    </view>
+  </view>
+
+  <view class="quick-grid" data-od-id="quick-actions">
+    <button class="surface quick-action pressable" hover-class="button-hover" bindtap="goRooms">
+      <view class="quick-mark">读</view><text>房间抄表</text><text class="muted">选房后直接录入</text>
+    </button>
+    <button class="surface quick-action pressable" hover-class="button-hover" bindtap="goBills">
+      <view class="quick-mark secondary">单</view><text>账单管理</text><text class="muted">抄表后自动生成</text>
+    </button>
+    <button class="surface quick-action pressable" hover-class="button-hover" bindtap="goCheckout">
+      <view class="quick-mark neutral">退</view><text>退租结算</text><text class="muted">押金与末次费用</text>
+    </button>
+  </view>
+
+  <view class="setup-actions" data-od-id="landlord-setup-actions">
+    <button class="surface setup-action pressable" hover-class="button-hover" bindtap="goAddRoom">
+      <view class="setup-action-top"><view class="setup-mark">房</view><text class="arrow">›</text></view>
+      <view class="setup-title">新增房间</view><text class="muted">设置租金、押金与水电单价</text>
+    </button>
+    <button class="surface setup-action pressable" hover-class="button-hover" bindtap="goGuide">
+      <view class="setup-action-top"><view class="setup-mark guide">序</view><text class="arrow">›</text></view>
+      <view class="setup-title">操作指南</view><text class="muted">建房、入住、抄表与收款</text>
+    </button>
+  </view>
+
+  <view wx:if="{{dashboard.unboundCount || dashboard.dueCount}}" class="section-title">需要处理</view>
+  <view wx:if="{{dashboard.unboundCount || dashboard.dueCount}}" class="surface card" data-od-id="attention-list">
+    <view wx:if="{{dashboard.dueCount}}" class="list-row pressable" hover-class="button-hover" bindtap="goBills" aria-role="button" aria-label="查看{{dashboard.dueCount}}笔待收账单">
+      <view class="row"><view class="signal warning"></view><view><view>{{dashboard.dueCount}} 笔账单待收</view><text class="muted">查看账单并提醒租客</text></view></view><text class="arrow">›</text>
+    </view>
+    <view wx:if="{{dashboard.unboundCount}}" class="list-row pressable" hover-class="button-hover" bindtap="goRooms" aria-role="button" aria-label="查看{{dashboard.unboundCount}}位未绑定微信的租客">
+      <view class="row"><view class="signal"></view><view><view>{{dashboard.unboundCount}} 位租客未绑定微信</view><text class="muted">绑定后可接收到账与收租提醒</text></view></view><text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="between section-title-row">
+    <view class="section-title">最近账单</view>
+    <text wx:if="{{bills.length}}" class="link pressable" hover-class="button-hover" bindtap="goBills" aria-role="button" aria-label="查看全部账单">查看全部</text>
+  </view>
+  <view class="surface card" data-od-id="recent-bills">
+    <view wx:if="{{!bills.length}}" class="empty dashboard-empty">
+      <view class="empty-title">暂无账单</view>
+      <text>新增房间并完成抄表后，账单会显示在这里。</text>
+    </view>
+    <view wx:for="{{bills}}" wx:key="id" class="list-row pressable" hover-class="button-hover" bindtap="goBill" data-id="{{item.id}}" aria-role="button" aria-label="{{item.roomName}}，{{item.dueDateDisplay}}收租，{{item.statusText}}，{{item.total}}元">
+      <view class="bill-info"><view class="bill-room">{{item.roomName}}</view><text class="muted">{{item.dueDateDisplay}}收租 · {{item.periodDisplay}}</text></view>
+      <view class="row bill-value"><text class="mono">¥{{item.total}}</text><text class="status {{item.statusClass}}">{{item.statusText}}</text><text class="arrow">›</text></view>
+    </view>
+  </view>
+
+  <view wx:if="{{toast}}" class="toast" aria-role="status" aria-live="polite">{{toast}}</view>
+</view>

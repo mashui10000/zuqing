@@ -1,0 +1,25 @@
+<view class="page-shell tenant-profile-page" wx:if="{{context}}" data-od-id="tenant-profile-form">
+  <view class="page-head profile-head">
+    <view><text class="eyebrow">{{context.property ? context.property.name + ' · ' + context.room.name : '我的租约'}}</text><view class="page-title">填写入住资料</view><view class="page-subtitle">入住几人就填写几份资料，电话号码至少填写一位。</view></view>
+  </view>
+
+  <view class="surface invite-source" data-od-id="tenant-invite-source">
+    <view class="source-mark">房</view><view><view>{{context.invite ? '房东邀请你补全资料' : '核对并更新入住资料'}}</view><text class="muted">入住日期由房东确认；姓名和身份证每人必填</text></view>
+  </view>
+
+  <view class="surface count-card" data-od-id="tenant-occupant-count">
+    <view><view class="count-title">入住人数</view><text class="muted">选择后自动生成同等数量的资料卡</text></view>
+    <picker mode="selector" range="{{occupantOptions}}" value="{{occupantIndex}}" bindchange="changeOccupants"><view class="count-picker"><text>{{form.occupantCount}} 人</text><text class="picker-arrow">›</text></view></picker>
+  </view>
+
+  <view wx:for="{{form.occupants}}" wx:key="id" id="tenant-occupant-card-{{index}}" class="surface occupant-card {{invalidIndex === index ? 'occupant-card-error' : ''}}" data-od-id="tenant-occupant-card-{{index}}">
+    <view class="between occupant-heading"><view class="occupant-title">住户 {{index + 1}}</view><text class="occupant-rule">姓名、身份证必填</text></view>
+    <view class="form-item"><text class="label">姓名</text><input class="field field-input {{invalidIndex === index && invalidKey === 'name' ? 'field-input-error' : ''}}" placeholder="请输入真实姓名" value="{{item.name}}" data-index="{{index}}" data-key="name" bindinput="updateOccupant" /><text wx:if="{{invalidIndex === index && invalidKey === 'name'}}" class="field-hint-error">{{error}}</text></view>
+    <view class="form-item"><view class="between"><text class="label">电话号码</text><text class="optional">选填</text></view><input class="field field-input mono {{invalidIndex === index && invalidKey === 'mobile' ? 'field-input-error' : ''}}" type="number" maxlength="11" placeholder="儿童等无手机号可留空" value="{{item.mobile}}" data-index="{{index}}" data-key="mobile" bindinput="updateOccupant" /><text wx:if="{{invalidIndex === index && invalidKey === 'mobile'}}" class="field-hint-error">{{error}}</text></view>
+    <view class="form-item"><text class="label">身份证号</text><input class="field field-input mono {{invalidIndex === index && invalidKey === 'idCard' ? 'field-input-error' : ''}}" type="idcard" maxlength="18" placeholder="18 位身份证号" value="{{item.idCard}}" data-index="{{index}}" data-key="idCard" bindinput="updateOccupant" /><text wx:if="{{invalidIndex === index && invalidKey === 'idCard'}}" class="field-hint-error">{{error}}</text></view>
+  </view>
+
+  <view wx:if="{{error}}" class="form-error" data-od-id="tenant-profile-error">{{error}}</view>
+  <view class="privacy-card"><view>提交与授权</view><text>入住日期由房东维护；房东可查看并管理本房间全部住户资料，且至少保留一位有效手机号。</text></view>
+  <button class="btn btn-primary full submit-button pressable" hover-class="button-hover" loading="{{saving}}" disabled="{{saving}}" bindtap="submit" data-od-id="tenant-profile-submit">提交 {{form.occupantCount}} 份资料给房东</button>
+</view>

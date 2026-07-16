@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/android-room-create.html",
+  "entry": "preview/android-room-create.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T17:38:00.293Z",
+  "updatedAt": "2026-07-14T17:38:00.293Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

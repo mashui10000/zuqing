@@ -1,0 +1,71 @@
+<view class="page-shell room-create-page" data-od-id="room-create-form">
+  <view class="page-head">
+    <view><text class="eyebrow">批量建房</text><view class="page-title">新增多个房间</view><view class="page-subtitle">位置和统一收费只填一次，每个房间保存后仍可单独修改。</view></view>
+  </view>
+
+  <view class="section-title">房间位置</view>
+  <view class="surface form-card location-form" data-od-id="room-location-fields">
+    <view>
+      <text class="label">小区 / 楼栋</text>
+      <input class="field field-input" placeholder="填写所在小区或楼栋" value="{{form.locationName}}" data-key="locationName" bindinput="updateForm" data-od-id="room-location-input" />
+    </view>
+    <view>
+      <view class="between"><text class="label">详细地址</text><text class="optional">选填</text></view>
+      <input class="field field-input" placeholder="街道、门牌号" value="{{form.address}}" data-key="address" bindinput="updateForm" data-od-id="room-address-input" />
+    </view>
+  </view>
+
+  <view class="between section-heading">
+    <view class="section-title">房间号</view>
+    <text class="room-count">已识别 {{roomCount}} 间</text>
+  </view>
+  <view class="surface form-card batch-room-card" data-od-id="floor-room-generator">
+    <view class="between generator-heading"><text class="label">按楼层生成</text><text class="generator-rule">楼层 + 两位序号</text></view>
+    <view class="floor-plan-list">
+      <view class="floor-plan-row">
+        <text class="generator-label">起始楼层</text>
+        <view class="floor-plan-control"><input class="field field-input mono floor-plan-input" type="number" placeholder="1" value="{{floorPlan.startFloor}}" data-key="startFloor" bindinput="updateFloorPlan" /><text class="floor-plan-unit">层</text></view>
+      </view>
+      <view class="floor-plan-row">
+        <text class="generator-label">楼层数量</text>
+        <view class="floor-plan-control"><input class="field field-input mono floor-plan-input" type="number" placeholder="填写" value="{{floorPlan.floorCount}}" data-key="floorCount" bindinput="updateFloorPlan" /><text class="floor-plan-unit">层</text></view>
+      </view>
+      <view class="floor-plan-row">
+        <text class="generator-label">每层房间数</text>
+        <view class="floor-plan-control"><input class="field field-input mono floor-plan-input" type="number" placeholder="填写" value="{{floorPlan.roomsPerFloor}}" data-key="roomsPerFloor" bindinput="updateFloorPlan" /><text class="floor-plan-unit">间</text></view>
+      </view>
+    </view>
+    <button class="btn btn-secondary generate-button pressable" hover-class="button-hover" bindtap="generateRoomNames" data-od-id="generate-room-names">生成并填入房间清单</button>
+    <text wx:if="{{floorPreview}}" class="generator-preview is-ready">{{floorPreview}}</text>
+
+    <view class="room-list-section">
+      <view class="between room-list-heading"><text class="label">房间清单</text><text class="optional">可直接修改，也可用逗号分隔</text></view>
+      <textarea class="field room-names-input" style="height: {{roomEditorHeight}}rpx;" maxlength="10000" placeholder="先按楼层生成，或每行填写一个房间号" value="{{form.roomNames}}" data-key="roomNames" bindinput="updateForm" data-od-id="room-names-input" />
+      <text class="batch-tip">生成结果和手动修改始终是同一份清单；保存时统一应用下方设置。</text>
+    </view>
+  </view>
+
+  <view class="section-title">入住设置</view>
+  <view class="surface form-card move-in-form" data-od-id="room-move-in-date-field">
+    <view class="between move-in-heading">
+      <view><text class="label">统一入住日期</text><text class="move-in-note">选填，后续仍可在每个房间内单独修改</text></view>
+      <button wx:if="{{form.moveInDate}}" class="date-clear pressable" hover-class="button-hover" catchtap="clearMoveInDate">清除</button>
+    </view>
+    <picker mode="date" value="{{form.moveInDate}}" bindchange="changeMoveInDate">
+      <view class="field date-picker-field"><text class="mono {{form.moveInDate ? '' : 'date-placeholder'}}">{{form.moveInDateDisplay || '请选择入住日期'}}</text><text class="picker-arrow">›</text></view>
+    </picker>
+  </view>
+
+  <view class="section-title">每月收费</view>
+  <view class="surface form-card fee-form" data-od-id="room-fee-fields">
+    <view class="form-grid">
+      <view><text class="label">月租（元）</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.rent}}" data-key="rent" bindinput="updateForm" /></view>
+      <view><text class="label">押金（元）</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.deposit}}" data-key="deposit" bindinput="updateForm" /></view>
+      <view><text class="label">水费（元 / 吨）</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.waterRate}}" data-key="waterRate" bindinput="updateForm" /></view>
+      <view><text class="label">电费（元 / 度）</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.electricRate}}" data-key="electricRate" bindinput="updateForm" /></view>
+    </view>
+    <view class="billing-note"><view class="between"><text>首次应收参考</text><text class="mono total">¥{{firstPayment}}</text></view><text class="muted">月租 + 押金；水电费将在抄表后按“本次读数 − 上次读数 × 单价”计算。</text></view>
+  </view>
+
+  <button class="btn btn-primary submit-button pressable" hover-class="button-hover" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit" data-od-id="create-room-submit">{{roomCount ? '确认新增 ' + roomCount + ' 间房' : '确认新增房间'}}</button>
+</view>

@@ -1,0 +1,13 @@
+.summary-card { padding: 32rpx; }
+.rate { color: var(--primary); font-size: 32rpx; font-weight: 700; }
+.ring { width: 270rpx; height: 270rpx; margin: 36rpx auto; padding: 22rpx; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--secondary) var(--rate), #E9EBEF 0); }
+.ring-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8rpx; border-radius: 50%; background: var(--surface); }
+.ring-inner .mono { font-size: 34rpx; font-weight: 700; }
+.money-grid { display: flex; gap: 18rpx; }
+.money-grid > view { min-width: 0; flex: 1 1 0; padding: 24rpx; border-radius: 22rpx; background: var(--surface-muted); }
+.money { display: block; font-size: 29rpx; font-weight: 680; }
+.money.received { color: var(--success); }
+.property-row { padding: 22rpx 0; border-bottom: 1rpx solid var(--border); }
+.property-row:last-child { border-bottom: 0; }
+.property-name { margin-bottom: 6rpx; font-weight: 680; }
+.property-row .progress { margin-top: 18rpx; }

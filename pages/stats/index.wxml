@@ -1,0 +1,22 @@
+<view class="page-shell" data-od-id="monthly-stats">
+  <view class="page-head">
+    <view><view class="page-title">月结</view><view class="page-subtitle">收款进度与位置表现</view></view>
+    <picker mode="date" fields="month" value="{{month}}" bindchange="changeMonth"><view class="chip active"><text class="chip-visual">{{month}}</text></view></picker>
+  </view>
+  <view class="surface summary-card" data-od-id="stats-summary">
+    <view class="between"><text class="label">本月收款率</text><text class="mono rate">{{stats.rate}}%</text></view>
+    <view class="ring" style="--rate: {{stats.rate * 3.6}}deg"><view class="ring-inner"><text class="mono">{{stats.paidCount}} / {{stats.billCount}}</text><text class="muted">账单已收</text></view></view>
+    <view class="money-grid">
+      <view><text class="label">已收</text><text class="mono money received">¥{{stats.received}}</text></view>
+      <view><text class="label">待收</text><text class="mono money">¥{{stats.outstanding}}</text></view>
+    </view>
+  </view>
+  <view class="section-title">按位置</view>
+  <view class="surface card" data-od-id="location-performance">
+    <view wx:for="{{stats.properties}}" wx:key="name" class="property-row">
+      <view class="between"><view><view class="property-name">{{item.name}}</view><text class="muted mono">已收 ¥{{item.received}} · 待收 ¥{{item.outstanding}}</text></view><text class="mono">{{item.rate}}%</text></view>
+      <view class="progress"><view class="progress-bar" style="width: {{item.rate}}%"></view></view>
+    </view>
+    <view wx:if="{{!stats.properties.length}}" class="empty">该月份暂无账单。</view>
+  </view>
+</view>

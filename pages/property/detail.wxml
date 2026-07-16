@@ -1,0 +1,128 @@
+<view class="page-shell" wx:if="{{property && selectedRoom}}" data-od-id="room-detail">
+  <view class="surface room-overview" data-od-id="room-overview">
+    <view class="between room-heading">
+      <view>
+        <text class="eyebrow">{{property.name}}</text>
+        <view class="title">{{selectedRoom.name}} 房间</view>
+        <text class="muted">{{property.address || '未填写详细地址'}}</text>
+      </view>
+      <view class="room-heading-actions">
+        <button class="text-action room-edit-action pressable" hover-class="button-hover" catchtap="openRoomEdit" data-od-id="edit-room-button" aria-label="修改{{selectedRoom.name}}房间">修改房间</button>
+        <text class="status {{selectedRoom.status === 'occupied' ? 'status-paid' : 'status-draft'}}">{{selectedRoom.status === 'occupied' ? '在租' : '空置'}}</text>
+      </view>
+    </view>
+    <view class="room-fee-grid">
+      <view><text class="label">月租</text><text class="mono">¥{{selectedRoom.rent}}</text></view>
+      <view><text class="label">押金</text><text class="mono">¥{{selectedRoom.deposit}}</text></view>
+      <view><text class="label">水费</text><text class="mono">¥{{selectedRoom.waterRate}} / 吨</text></view>
+      <view><text class="label">电费</text><text class="mono">¥{{selectedRoom.electricRate}} / 度</text></view>
+    </view>
+  </view>
+
+  <view class="surface lease-date-card" data-od-id="room-move-in-date">
+    <view class="lease-date-head">
+      <view><view class="lease-date-title">入住与收租</view><text class="muted">按入住日计算，一个月为一期</text></view>
+      <picker mode="date" value="{{selectedRoom.moveInDate}}" bindchange="changeRoomMoveInDate"><view class="lease-date-picker pressable" hover-class="button-hover" aria-role="button" aria-label="设置{{selectedRoom.name}}房间入住日期，当前{{selectedRoom.moveInDateDisplay}}"><text class="mono">{{selectedRoom.moveInDateDisplay}}</text><text class="picker-arrow">›</text></view></picker>
+    </view>
+    <view wx:if="{{selectedRoom.moveInDate}}" class="lease-schedule">
+      <view><text class="label">首期租期</text><text class="mono">{{selectedRoom.firstPeriodDisplay}}</text></view>
+      <view><text class="label">首次收租</text><text class="mono collection-value">{{selectedRoom.firstDueDateDisplay}}</text></view>
+    </view>
+  </view>
+
+  <view class="section-heading"><view class="section-title">住户资料</view></view>
+
+  <view wx:if="{{selectedRoom.tenant}}" class="occupant-list" data-od-id="room-occupant-list">
+    <view class="between occupant-list-head"><view>全部住户</view><text>{{selectedRoom.tenant.occupantCount}} 人</text></view>
+    <view wx:for="{{selectedRoom.tenant.occupants}}" wx:key="id" class="surface room-occupant-card">
+      <view class="occupant-card-head"><text class="occupant-name">{{item.name || '待填写姓名'}}</text><button class="text-action occupant-edit-action pressable" hover-class="button-hover" catchtap="editOccupant" data-occupant-id="{{item.id}}" aria-label="修改{{item.name || '当前住户'}}资料">修改</button></view>
+      <view class="occupant-detail"><text class="label">电话</text><text class="mono">{{item.mobileDisplay}}</text></view>
+      <view class="occupant-detail"><text class="label">身份证</text><text class="mono id-value">{{item.idCardDisplay}}</text></view>
+    </view>
+  </view>
+  <view wx:else class="surface empty-profile" data-od-id="room-occupant-empty">
+    <view class="empty-mark">待</view>
+    <view><view>还没有租客资料</view><text class="muted">房东确认入住日期后，可发送邀请让租客填写住户资料。</text></view>
+  </view>
+
+  <view wx:if="{{selectedRoom.status === 'occupied' && meterRoom}}" class="section-heading meter-section-heading">
+    <view class="section-title">水电抄表</view><text class="meter-period">{{meterRoom.monthDisplay}}</text>
+  </view>
+  <view wx:if="{{selectedRoom.status === 'occupied' && meterRoom}}" class="surface room-meter-card" data-od-id="room-meter-entry">
+    <view class="between room-meter-head">
+      <text class="muted">直接填写本房间读数，保存后生成账单</text>
+      <text class="status {{meterRoom.saved ? 'status-paid' : 'status-draft'}}">{{meterRoom.saved ? '已完成' : (meterRoom.currentSaved ? '待补上期' : '待录入')}}</text>
+    </view>
+    <view class="room-meter-grid">
+      <view class="room-meter-kind">
+        <view class="meter-kind-title">水表</view>
+        <view wx:if="{{meterRoom.previousSaved}}" class="meter-field-block"><text class="label">上期读数</text><view class="field meter-readonly"><text class="mono">{{meterRoom.previousWater}}</text><text class="auto-mark">已带入</text></view></view>
+        <view wx:else class="meter-field-block"><text class="label">上期读数 · 首次补填</text><input class="field field-input mono" type="digit" placeholder="填写一次" value="{{meterRoom.previousWater}}" data-key="previousWater" bindinput="updateMeterValue" /></view>
+        <view class="meter-field-block"><text class="label">本期读数</text><input class="field field-input mono" type="digit" placeholder="填写读数" value="{{meterRoom.water}}" data-key="water" bindinput="updateMeterValue" /></view>
+      </view>
+      <view class="room-meter-kind">
+        <view class="meter-kind-title">电表</view>
+        <view wx:if="{{meterRoom.previousSaved}}" class="meter-field-block"><text class="label">上期读数</text><view class="field meter-readonly"><text class="mono">{{meterRoom.previousElectric}}</text><text class="auto-mark">已带入</text></view></view>
+        <view wx:else class="meter-field-block"><text class="label">上期读数 · 首次补填</text><input class="field field-input mono" type="digit" placeholder="填写一次" value="{{meterRoom.previousElectric}}" data-key="previousElectric" bindinput="updateMeterValue" /></view>
+        <view class="meter-field-block"><text class="label">本期读数</text><input class="field field-input mono" type="digit" placeholder="填写读数" value="{{meterRoom.electric}}" data-key="electric" bindinput="updateMeterValue" /></view>
+      </view>
+    </view>
+    <view class="between meter-other-row"><text class="muted">其他费用</text><input class="meter-other-input mono" type="digit" placeholder="0" value="{{meterRoom.otherFee}}" data-key="otherFee" bindinput="updateMeterValue" /></view>
+    <button class="btn btn-secondary full pressable meter-save-button" hover-class="button-hover" loading="{{meterSaving}}" disabled="{{meterSaving}}" bindtap="saveMeterReading">{{meterRoom.currentSaved ? '更新读数和账单' : '保存读数并生成账单'}}</button>
+  </view>
+
+  <view class="invite-note"><text>房东管理权限</text><view>可查看本房间全部住户的完整资料，并逐人修改；退租请通过退租结算处理。</view></view>
+  <view class="room-actions" data-od-id="room-primary-actions">
+    <button class="btn btn-primary full pressable" hover-class="button-hover" open-type="share" disabled="{{!selectedRoom.moveInDate}}" data-room-id="{{selectedRoom.id}}">{{selectedRoom.moveInDate ? (selectedRoom.pendingInvite ? '重新发送资料邀请' : '发送给租客填写') : '先设置入住日期'}}</button>
+    <text wx:if="{{!selectedRoom.moveInDate}}" class="action-helper">入住日期由房东确认，租客端不能修改。</text>
+    <button wx:if="{{selectedRoom.status !== 'occupied'}}" class="btn btn-plain full pressable" hover-class="button-hover" bindtap="openManualBind">房东代登记</button>
+  </view>
+
+  <view wx:if="{{showRoomEdit}}" class="scrim" bindtap="closeRoomEdit">
+    <view class="sheet" catchtap="stop" data-od-id="edit-room-sheet" aria-role="dialog" aria-label="修改{{selectedRoom.name}}房间">
+      <view class="sheet-handle"></view><view class="sheet-title">修改 {{selectedRoom.name}} 房间</view>
+      <view class="stack room-edit-form">
+        <view><text class="label">小区 / 楼栋</text><input class="field field-input {{roomEditInvalidKey === 'locationName' ? 'field-input-error' : ''}}" value="{{roomEditForm.locationName}}" placeholder="填写所在小区或楼栋" data-key="locationName" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'locationName'}}" focus="{{roomEditInvalidKey === 'locationName'}}" /></view>
+        <view><view class="between"><text class="label">详细地址</text><text class="optional">选填</text></view><input class="field field-input" value="{{roomEditForm.address}}" placeholder="街道、门牌号" data-key="address" bindinput="updateRoomEdit" /></view>
+        <view><text class="label">房间号</text><input class="field field-input {{roomEditInvalidKey === 'name' ? 'field-input-error' : ''}}" value="{{roomEditForm.name}}" placeholder="房间号" data-key="name" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'name'}}" focus="{{roomEditInvalidKey === 'name'}}" /></view>
+        <view class="room-edit-fees">
+          <view><text class="label">月租（元）</text><input class="field field-input mono {{roomEditInvalidKey === 'rent' ? 'field-input-error' : ''}}" type="digit" value="{{roomEditForm.rent}}" data-key="rent" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'rent'}}" focus="{{roomEditInvalidKey === 'rent'}}" /></view>
+          <view><text class="label">押金（元）</text><input class="field field-input mono {{roomEditInvalidKey === 'deposit' ? 'field-input-error' : ''}}" type="digit" value="{{roomEditForm.deposit}}" data-key="deposit" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'deposit'}}" focus="{{roomEditInvalidKey === 'deposit'}}" /></view>
+          <view><text class="label">水费（元 / 吨）</text><input class="field field-input mono {{roomEditInvalidKey === 'waterRate' ? 'field-input-error' : ''}}" type="digit" value="{{roomEditForm.waterRate}}" data-key="waterRate" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'waterRate'}}" focus="{{roomEditInvalidKey === 'waterRate'}}" /></view>
+          <view><text class="label">电费（元 / 度）</text><input class="field field-input mono {{roomEditInvalidKey === 'electricRate' ? 'field-input-error' : ''}}" type="digit" value="{{roomEditForm.electricRate}}" data-key="electricRate" bindinput="updateRoomEdit" aria-invalid="{{roomEditInvalidKey === 'electricRate'}}" focus="{{roomEditInvalidKey === 'electricRate'}}" /></view>
+        </view>
+        <text class="room-edit-note">本次修改只影响当前房间，其他房间保持不变。</text>
+        <view wx:if="{{roomEditError}}" class="form-error" aria-live="assertive">{{roomEditError}}</view>
+        <button class="btn btn-primary pressable" hover-class="button-hover" bindtap="saveRoomEdit">保存当前房间</button>
+        <button class="btn btn-plain pressable" hover-class="button-hover" bindtap="closeRoomEdit">取消</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showOccupantEdit}}" class="scrim" bindtap="closeOccupantEdit">
+    <view class="sheet" catchtap="stop" data-od-id="edit-occupant-sheet" aria-role="dialog" aria-label="修改住户资料">
+      <view class="sheet-handle"></view><view class="sheet-title">修改住户资料</view>
+      <view class="stack occupant-edit-form">
+        <view><text class="label">姓名</text><input class="field field-input" value="{{occupantForm.name}}" placeholder="真实姓名" data-key="name" bindinput="updateOccupantForm" /></view>
+        <view><view class="between"><text class="label">手机号</text><text class="optional">选填</text></view><input class="field field-input mono" type="number" maxlength="11" value="{{occupantForm.mobile}}" placeholder="无手机号可留空" data-key="mobile" bindinput="updateOccupantForm" /></view>
+        <view><text class="label">身份证号</text><input class="field field-input mono" type="idcard" maxlength="18" value="{{occupantForm.idCard}}" placeholder="18 位身份证号" data-key="idCard" bindinput="updateOccupantForm" /></view>
+        <button class="btn btn-primary pressable" hover-class="button-hover" bindtap="saveOccupant">保存修改</button>
+        <button class="btn btn-plain pressable" hover-class="button-hover" bindtap="closeOccupantEdit">取消</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showBind}}" class="scrim" bindtap="closeBind">
+    <view class="sheet" catchtap="stop" data-od-id="bind-tenant-sheet" aria-role="dialog" aria-label="登记入住">
+      <view class="sheet-handle"></view><view class="sheet-title">{{selectedRoom.name}} 登记入住</view>
+      <view class="stack">
+        <view><text class="label">租客姓名</text><input class="field field-input" placeholder="姓名" data-key="name" bindinput="updateForm" /></view>
+        <view><text class="label">手机号</text><input class="field field-input mono" type="number" maxlength="11" placeholder="用于核验绑定" data-key="mobile" bindinput="updateForm" /></view>
+        <view><text class="label">月租</text><input class="field field-input mono" type="digit" value="{{form.rent}}" data-key="rent" bindinput="updateForm" /></view>
+        <view><text class="label">入住日期</text><picker mode="date" value="{{form.moveInDate}}" bindchange="changeBindMoveInDate"><view class="field date-field pressable" hover-class="button-hover" aria-role="button" aria-label="选择入住日期"><text class="mono">{{form.moveInDateDisplay || '请选择日期'}}</text><text class="picker-arrow">›</text></view></picker></view>
+        <view class="surface toggle-row"><view><view>绑定租客微信</view><text class="muted">绑定后自动接收账单与收租提醒</text></view><switch checked="{{form.wechatBound}}" color="#0071E3" bindchange="toggleWechat" /></view>
+        <button class="btn btn-primary pressable" hover-class="button-hover" bindtap="submitBind">确认入住</button>
+      </view>
+    </view>
+  </view>
+</view>

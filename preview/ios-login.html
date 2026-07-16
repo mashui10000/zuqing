@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>租清 · iOS 身份登录</title><link rel="stylesheet" href="shared.css"/></head>
+<body><main class="app ios" data-od-id="ios-role-login">
+  <header class="statusbar" data-od-id="ios-login-statusbar"><span>9:41</span><span class="status-icons"><i></i><i></i><i></i></span></header>
+  <section class="login-screen" data-od-id="ios-login-content">
+    <div class="login-brand"><span class="brand-mark">租</span><span>租清</span></div>
+    <div class="login-copy"><p class="eyebrow">欢迎回来</p><h1 class="login-title" data-od-id="ios-login-title">选择你的身份</h1><p class="login-subtitle">房东和租客使用不同入口，数据与操作互不混淆。</p></div>
+    <div class="role-list" data-od-id="ios-role-options">
+      <button class="role-choice selected" data-role-choice="landlord" data-od-id="ios-role-landlord"><span class="role-symbol">房</span><span class="role-copy"><strong>我是房东</strong><small>管理房间、抄表、账单与收款</small></span><span class="role-radio"></span></button>
+      <button class="role-choice" data-role-choice="tenant" data-od-id="ios-role-tenant"><span class="role-symbol tenant">客</span><span class="role-copy"><strong>我是租客</strong><small>查看账单、水电明细与支付记录</small></span><span class="role-radio"></span></button>
+    </div>
+    <div class="selected-role-note" data-role-note>将进入房东端 · 管理房间、抄表、账单与收款</div>
+    <div class="login-actions" data-od-id="ios-login-actions"><a class="btn btn-primary btn-block" data-role-enter data-landlord-url="../mobile-ios.html" data-tenant-url="ios-tenant.html" href="../mobile-ios.html">微信快捷登录 · 房东</a><button class="btn btn-plain btn-block" data-toast="已保留当前身份选择">稍后绑定微信</button></div>
+    <p class="privacy-note">微信昵称仅用于当前身份展示；正式绑定关系由房东邀请或租约确认后建立。</p>
+  </section><div class="toast"></div>
+</main><script src="shared.js"></script></body></html>

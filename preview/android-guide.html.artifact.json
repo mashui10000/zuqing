@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/android-guide.html",
+  "entry": "preview/android-guide.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T17:38:00.308Z",
+  "updatedAt": "2026-07-14T17:38:00.308Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

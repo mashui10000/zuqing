@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/ios-meter.html",
+  "entry": "preview/ios-meter.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T13:49:40.939Z",
+  "updatedAt": "2026-07-14T13:49:40.939Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

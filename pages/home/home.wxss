@@ -1,0 +1,52 @@
+.home-shell { padding-top: 0; }
+.safe-top { width: 100%; flex: 0 0 auto; }
+.compact-head { width: 100%; min-width: 0; margin-bottom: 18rpx; display: flex; align-items: center; gap: 20rpx; }
+.compact-brand, .compact-title { flex: 0 0 auto; font-size: 30rpx; line-height: 1; font-weight: 680; letter-spacing: -0.35rpx; white-space: nowrap; }
+.compact-brand { color: var(--primary); }
+.hero-card { padding: 30rpx; color: var(--fg); background: var(--surface); border: 1rpx solid rgba(210, 210, 215, 0.72); box-shadow: var(--shadow); }
+.hero-card .label, .hero-card .muted { color: var(--muted); }
+.hero-card .metric { color: var(--fg); }
+.collection-rate { padding: 10rpx 16rpx; border-radius: 999rpx; background: var(--primary-soft); color: var(--primary); font-size: 22rpx; font-weight: 650; }
+.hero-card .progress { margin-top: 30rpx; background: #E8E8ED; }
+.hero-card .progress-bar { background: var(--primary); }
+.summary-foot { margin-top: 16rpx; font-size: 23rpx; }
+.warning-text { color: var(--warning); }
+.success-text { color: var(--success); }
+.quick-grid { width: 100%; display: flex; align-items: stretch; gap: 14rpx; margin-top: 18rpx; }
+.quick-action { width: 0; min-width: 0; min-height: 184rpx; flex: 1 1 0; overflow: hidden; padding: 22rpx 14rpx; display: flex; flex-direction: column; align-items: flex-start; gap: 8rpx; text-align: left; line-height: 1.2; font-size: 25rpx; box-shadow: none; }
+.quick-action > text { width: 100%; }
+.quick-action .muted { min-height: 52rpx; font-size: 20rpx; line-height: 1.35; white-space: normal; }
+.quick-mark { width: 58rpx; height: 58rpx; display: grid; place-items: center; margin-bottom: 8rpx; border-radius: 18rpx; background: var(--surface-muted); color: var(--muted); font-weight: 680; }
+.quick-mark.secondary { color: var(--primary); background: var(--primary-soft); }
+.quick-mark.neutral { color: var(--muted); background: var(--surface-muted); }
+.setup-actions { width: 100%; margin-top: 18rpx; display: flex; align-items: stretch; gap: 14rpx; }
+.setup-action { width: 0; min-width: 0; min-height: 164rpx; flex: 1 1 0; padding: 20rpx; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; text-align: left; box-shadow: none; }
+.setup-action-top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.setup-mark { width: 48rpx; height: 48rpx; display: grid; place-items: center; border-radius: 15rpx; background: var(--surface-muted); color: var(--muted); font-size: 21rpx; font-weight: 680; }
+.setup-mark.guide { background: var(--surface-muted); color: var(--muted); }
+.setup-title { width: 100%; margin: 15rpx 0 6rpx; font-size: 26rpx; font-weight: 700; }
+.setup-action .muted { width: 100%; font-size: 20rpx; line-height: 1.35; white-space: normal; }
+.section-title-row { margin-top: 8rpx; }
+.link { min-height: 88rpx; padding: 0 8rpx; display: inline-flex; align-items: center; color: var(--primary); font-size: 24rpx; }
+.signal { width: 18rpx; height: 18rpx; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 10rpx var(--primary-soft); }
+.signal.warning { background: var(--warning); box-shadow: 0 0 0 10rpx #FFF4E5; }
+.bill-info { overflow: hidden; }
+.bill-room { overflow: hidden; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.bill-value { flex: 0 0 auto; gap: 10rpx; }
+.bill-value .mono { white-space: nowrap; }
+.dashboard-empty { padding: 52rpx 24rpx; }
+.dashboard-empty .empty-title { margin-bottom: 10rpx; color: var(--fg); font-size: 29rpx; font-weight: 700; }
+.dashboard-empty text { font-size: 22rpx; line-height: 1.55; }
+
+@media (max-width: 340px) {
+  .compact-head { gap: 16rpx; }
+  .compact-brand, .compact-title { font-size: 27rpx; }
+  .quick-grid { gap: 10rpx; }
+  .quick-action { min-height: 178rpx; padding-left: 8rpx; padding-right: 8rpx; font-size: 23rpx; }
+  .quick-action .muted { font-size: 18rpx; }
+  .quick-mark { width: 52rpx; height: 52rpx; }
+  .setup-actions { gap: 10rpx; }
+  .setup-action { min-height: 158rpx; padding: 18rpx; }
+  .setup-title { font-size: 24rpx; }
+  .setup-action .muted { font-size: 18rpx; }
+}

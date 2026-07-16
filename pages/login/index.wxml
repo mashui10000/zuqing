@@ -1,0 +1,30 @@
+<view class="login-page" style="padding-top: {{topInset}}px" data-od-id="role-login">
+  <view class="login-brand" data-od-id="login-brand"><view class="brand-mark">租</view><text>租清</text></view>
+
+  <view class="login-copy">
+    <text class="eyebrow">{{inviteMode ? '入住资料邀请' : '欢迎回来'}}</text>
+    <view class="login-title" data-od-id="login-title">{{inviteMode ? '以租客身份继续' : '选择你的身份'}}</view>
+    <view class="login-subtitle">{{inviteMode ? '房东邀请你填写入住资料，登录后会自动进入对应房间。' : '房东和租客使用不同入口，数据与操作互不混淆。'}}</view>
+  </view>
+
+  <view class="role-list" data-od-id="role-options">
+    <button class="role-choice pressable {{role === 'landlord' ? 'selected' : ''}}" hover-class="button-hover" data-role="landlord" bindtap="selectRole" data-od-id="role-landlord">
+      <view class="role-symbol">房</view>
+      <view class="role-copy"><view class="role-name">我是房东</view><text>管理房间、抄表、账单与收款</text></view>
+      <view class="role-radio"><view></view></view>
+    </button>
+    <button class="role-choice pressable {{role === 'tenant' ? 'selected' : ''}}" hover-class="button-hover" data-role="tenant" bindtap="selectRole" data-od-id="role-tenant">
+      <view class="role-symbol tenant">客</view>
+      <view class="role-copy"><view class="role-name">我是租客</view><text>查看账单、水电明细与支付记录</text></view>
+      <view class="role-radio"><view></view></view>
+    </button>
+  </view>
+
+  <view class="selected-note">{{inviteMode ? '该邀请仅供租客填写 · 房东可查看并管理本房间全部资料' : '将进入' + roleLabel + '端 · ' + roleSummary}}</view>
+
+  <view class="login-actions" data-od-id="login-actions">
+    <button class="btn btn-primary full pressable" hover-class="button-hover" loading="{{loading}}" disabled="{{loading}}" bindtap="wechatLogin" data-od-id="wechat-login">微信快捷登录</button>
+    <button class="btn btn-plain full pressable" hover-class="button-hover" bindtap="continueWithoutWechat" data-od-id="continue-without-wechat">不授权昵称，继续</button>
+  </view>
+  <view class="privacy-note">登录代表你同意仅将微信昵称用于当前身份展示；正式绑定关系由房东邀请或租约确认后建立。</view>
+</view>

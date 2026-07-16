@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>租清 · 交互预览</title>
+  <style>
+    :root { --bg:#F5F5F7; --surface:#FFFFFF; --fg:#1D1D1F; --muted:#6E6E73; --border:#D2D2D7; --accent:#0071E3; --accent-soft:#EAF3FF; }
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased}.wrap{max-width:1080px;margin:0 auto;padding:64px 28px 80px}header{max-width:720px;margin-bottom:46px}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.08em}h1{margin:12px 0;font-size:clamp(42px,6vw,76px);line-height:1;letter-spacing:-.04em;font-weight:680}p{color:var(--muted);font-size:18px;line-height:1.6}.platform{margin-top:42px}h2{font-size:24px;letter-spacing:-.02em}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{min-height:154px;padding:22px;border:1px solid color-mix(in oklch,var(--border) 76%,transparent);border-radius:22px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 30px color-mix(in oklch,var(--fg) 5%,transparent);transition:transform .16s cubic-bezier(.28,0,.22,1),box-shadow .16s ease}.card:hover{transform:translateY(-2px);box-shadow:0 16px 38px color-mix(in oklch,var(--fg) 8%,transparent)}.card:active{transform:scale(.985);opacity:.84}.card:focus-visible{outline:3px solid color-mix(in oklch,var(--accent) 42%,transparent);outline-offset:3px}.num{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--accent-soft);color:var(--accent);font:700 13px ui-monospace,monospace}.card strong{font-size:17px}.card span{color:var(--muted);font-size:13px}.note{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}a{color:inherit;text-decoration:none}@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.wrap{padding-top:40px}}@media(max-width:440px){.grid{grid-template-columns:1fr}.wrap{padding-inline:18px}h1{font-size:42px}}
+  </style>
+</head>
+<body>
+  <main class="wrap" data-od-id="preview-launcher">
+    <header data-od-id="launcher-header"><div class="eyebrow">租清 · HTML 交互预览</div><h1 data-od-id="launcher-title">从抄表到收款，一条线完成。</h1><p>分别体验 iOS 与 Android 的原生适配。当前已清除全部演示记录，各页面展示真实空状态和首个操作入口。</p></header>
+    <section class="platform" data-od-id="ios-preview-list"><h2>iOS</h2><div class="grid">
+      <a class="card" href="preview/ios-login.html"><div class="num">01</div><strong>身份登录</strong><span>选择房东或租客入口</span></a>
+      <a class="card" href="mobile-ios.html"><div class="num">02</div><strong>房东工作台</strong><span>零数据收款概览</span></a>
+      <a class="card" href="preview/ios-meter.html"><div class="num">03</div><strong>本月抄表</strong><span>无在租房间引导</span></a>
+      <a class="card" href="preview/ios-bills.html"><div class="num">04</div><strong>账单管理</strong><span>空账单与首个操作</span></a>
+      <a class="card" href="preview/ios-tenant.html"><div class="num">05</div><strong>租客账单</strong><span>未绑定房间状态</span></a>
+      <a class="card" href="preview/ios-room-profile.html"><div class="num">06</div><strong>房间资料</strong><span>入住日期与收费管理</span></a>
+      <a class="card" href="preview/ios-tenant-profile.html"><div class="num">07</div><strong>入住资料</strong><span>身份证与入住人数</span></a>
+      <a class="card" href="preview/ios-room-create.html"><div class="num">08</div><strong>新增房间</strong><span>位置与收费一次填写</span></a>
+      <a class="card" href="preview/ios-guide.html"><div class="num">09</div><strong>操作指南</strong><span>从建房到收款的步骤</span></a>
+    </div></section>
+    <section class="platform" data-od-id="android-preview-list"><h2>Android</h2><div class="grid">
+      <a class="card" href="preview/android-login.html"><div class="num">01</div><strong>身份登录</strong><span>选择房东或租客入口</span></a>
+      <a class="card" href="mobile-android.html"><div class="num">02</div><strong>房东工作台</strong><span>Material 导航适配</span></a>
+      <a class="card" href="preview/android-meter.html"><div class="num">03</div><strong>本月抄表</strong><span>无在租房间引导</span></a>
+      <a class="card" href="preview/android-bills.html"><div class="num">04</div><strong>账单管理</strong><span>空账单与首个操作</span></a>
+      <a class="card" href="preview/android-tenant.html"><div class="num">05</div><strong>租客账单</strong><span>未绑定房间状态</span></a>
+      <a class="card" href="preview/android-room-profile.html"><div class="num">06</div><strong>房间资料</strong><span>入住日期与收费管理</span></a>
+      <a class="card" href="preview/android-tenant-profile.html"><div class="num">07</div><strong>入住资料</strong><span>身份证与入住人数</span></a>
+      <a class="card" href="preview/android-room-create.html"><div class="num">08</div><strong>新增房间</strong><span>位置与收费一次填写</span></a>
+      <a class="card" href="preview/android-guide.html"><div class="num">09</div><strong>操作指南</strong><span>从建房到收款的步骤</span></a>
+    </div></section>
+    <div class="note">微信小程序源码位于项目根目录；当前使用可替换的本地数据层，Supabase 接口已集中预留在 services/backend.js。</div>
+  </main>
+</body>
+</html>
