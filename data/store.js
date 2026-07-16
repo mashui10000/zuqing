@@ -6,6 +6,7 @@ const DATA_VERSION = 2
 function initialState() {
   return {
     version: DATA_VERSION,
+    cloudUserId: '',
     currentRole: 'landlord',
     auth: {
       loggedIn: false,
@@ -35,6 +36,10 @@ function initialize() {
   const saved = wx.getStorageSync(STORAGE_KEY)
   if (saved && saved.version === DATA_VERSION) {
     let changed = false
+    if (typeof saved.cloudUserId !== 'string') {
+      saved.cloudUserId = ''
+      changed = true
+    }
     if (!saved.auth) {
       saved.auth = { loggedIn: false, role: '', displayName: '', avatarUrl: '', tenantId: '' }
       changed = true
@@ -118,6 +123,22 @@ function initialize() {
 }
 
 function getState() { return initialize() }
+
+function bindCloudUser(userId) {
+  const normalizedUserId = String(userId || '').trim()
+  if (!normalizedUserId) throw new Error('云端用户身份无效')
+  const state = initialize()
+  if (state.cloudUserId && state.cloudUserId !== normalizedUserId) {
+    const nextState = initialState()
+    nextState.cloudUserId = normalizedUserId
+    return save(nextState)
+  }
+  if (!state.cloudUserId) {
+    state.cloudUserId = normalizedUserId
+    return save(state)
+  }
+  return state
+}
 
 function mutate(callback) {
   const state = getState()
@@ -949,4 +970,4 @@ function importBackup(text) {
 }
 function reset() { return save(initialState()) }
 
-module.exports = { initialize, getState, getSession, login, logout, getDashboard, listProperties, listRooms, getProperty, addRoom, addRooms, updateRoom, updateRoomMoveInDate, bindTenant, createTenantInvite, getTenantProfile, submitTenantProfile, updateTenantOccupant, removeTenantOccupant, listMeterRooms, saveReading, saveMeterReadings, generateMonthlyBills, queueDueReminders, listBills, getBill, getStats, getTenantPortal, markBillPaid, checkoutRoom, setRole, exportBackup, importBackup, reset }
+module.exports = { initialize, getState, bindCloudUser, getSession, login, logout, getDashboard, listProperties, listRooms, getProperty, addRoom, addRooms, updateRoom, updateRoomMoveInDate, bindTenant, createTenantInvite, getTenantProfile, submitTenantProfile, updateTenantOccupant, removeTenantOccupant, listMeterRooms, saveReading, saveMeterReadings, generateMonthlyBills, queueDueReminders, listBills, getBill, getStats, getTenantPortal, markBillPaid, checkoutRoom, setRole, exportBackup, importBackup, reset }

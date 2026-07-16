@@ -77,7 +77,7 @@ Page({
       success: (result) => this.completeLogin(result.userInfo || {}),
       fail: () => {
         this.setData({ loading: false })
-        wx.showToast({ title: '未授权，可选择“不授权昵称，继续”', icon: 'none' })
+        wx.showToast({ title: '未授权，可选择“不授权昵称，仍用微信登录”', icon: 'none' })
       }
     })
   },
@@ -91,8 +91,15 @@ Page({
 
   async completeLogin(userInfo) {
     try {
-      await backend.whenReady()
-      const session = backend.login({
+      const loginResult = await new Promise((resolve, reject) => {
+        wx.login({
+          timeout: 10000,
+          success: (result) => result.code ? resolve(result) : reject(new Error('微信未返回登录凭证，请重试')),
+          fail: (error) => reject(new Error(error && error.errMsg ? error.errMsg : '无法获取微信登录凭证'))
+        })
+      })
+      const session = await backend.loginWithWechat({
+        code: loginResult.code,
         role: this.data.role,
         displayName: userInfo.nickName || ROLE_COPY[this.data.role].fallbackName,
         avatarUrl: userInfo.avatarUrl || '',

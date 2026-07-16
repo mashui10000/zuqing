@@ -8,8 +8,8 @@ let listeners = []
 let syncStatus = {
   mode: supabase.isConfigured() ? 'supabase' : 'local',
   configured: supabase.isConfigured(),
-  status: supabase.isConfigured() ? 'idle' : 'disabled',
-  message: supabase.isConfigured() ? '待连接' : '未配置 Supabase',
+  status: supabase.isConfigured() ? 'waiting-login' : 'disabled',
+  message: supabase.isConfigured() ? '等待微信登录' : '未配置 Supabase',
   lastSyncedAt: '',
   error: ''
 }
@@ -19,6 +19,35 @@ function emitStatus(patch) {
   listeners.slice().forEach((listener) => {
     try { listener(Object.assign({}, syncStatus)) } catch (error) {}
   })
+}
+
+function importRemoteState(result, localState, userId) {
+  if (result.source !== 'remote' || !result.state) return localState
+  if (result.state.version !== localState.version || localMutationCount > 0) {
+    supabase.schedulePush(store.getState()).catch(() => {})
+    return store.getState()
+  }
+  if (result.state.cloudUserId && result.state.cloudUserId !== userId) {
+    throw new Error('云端数据身份校验失败，请联系管理员')
+  }
+  const remoteState = JSON.parse(JSON.stringify(result.state))
+  remoteState.cloudUserId = userId
+  store.importBackup(JSON.stringify(remoteState))
+  return store.getState()
+}
+
+async function connectCloudState(providedSession) {
+  const cloudSession = providedSession || await supabase.ensureSession()
+  const localState = store.bindCloudUser(cloudSession.userId)
+  const result = await supabase.bootstrap(localState, cloudSession)
+  const state = importRemoteState(result, localState, cloudSession.userId)
+  emitStatus({
+    status: 'synced',
+    message: '已同步',
+    lastSyncedAt: new Date().toISOString(),
+    error: ''
+  })
+  return state
 }
 
 function initialize() {
@@ -31,24 +60,21 @@ function initialize() {
     return localState
   }
 
-  emitStatus({ status: 'connecting', message: '正在连接 Supabase', error: '' })
-  readyPromise = supabase.bootstrap(localState).then((result) => {
-    if (result.source === 'remote' && result.state && result.state.version === localState.version && localMutationCount === 0) {
-      store.importBackup(JSON.stringify(result.state))
-    } else if (result.source === 'remote' && localMutationCount > 0) {
-      supabase.schedulePush(store.getState()).catch(() => {})
-    } else if (result.source === 'remote' && result.state && result.state.version !== localState.version) {
-      supabase.schedulePush(store.getState()).catch(() => {})
-    }
-    emitStatus({
-      status: 'synced',
-      message: '已同步',
-      lastSyncedAt: new Date().toISOString(),
-      error: ''
-    })
+  if (!supabase.hasSession()) {
+    if (localState.auth && localState.auth.loggedIn) store.logout()
+    emitStatus({ status: 'waiting-login', message: '等待微信登录', error: '' })
+    readyPromise = Promise.resolve(store.getState())
     return store.getState()
-  }).catch((error) => {
-    emitStatus({ status: 'error', message: '云端连接失败', error: error.message || String(error) })
+  }
+
+  emitStatus({ status: 'connecting', message: '正在恢复微信登录', error: '' })
+  readyPromise = connectCloudState().catch((error) => {
+    if (error.code === 'AUTH_REQUIRED') {
+      store.logout()
+      emitStatus({ status: 'waiting-login', message: '请重新微信登录', error: '' })
+    } else {
+      emitStatus({ status: 'error', message: '云端连接失败', error: error.message || String(error) })
+    }
     return store.getState()
   })
 
@@ -60,8 +86,31 @@ function whenReady() {
   return readyPromise
 }
 
+async function loginWithWechat(payload) {
+  if (!payload || !['landlord', 'tenant'].includes(payload.role)) throw new Error('请选择登录身份')
+  emitStatus({ status: 'connecting', message: '正在验证微信身份', error: '' })
+  try {
+    const cloudSession = await supabase.signInWithWechat(payload.code)
+    localMutationCount = 0
+    readyPromise = connectCloudState(cloudSession)
+    await readyPromise
+    const session = store.login({
+      role: payload.role,
+      displayName: payload.displayName,
+      avatarUrl: payload.avatarUrl,
+      tenantId: payload.tenantId || ''
+    })
+    localMutationCount += 1
+    await scheduleSync()
+    return session
+  } catch (error) {
+    emitStatus({ status: 'error', message: '微信登录失败', error: error.message || String(error) })
+    throw error
+  }
+}
+
 function scheduleSync() {
-  if (!supabase.isConfigured()) return Promise.resolve({ skipped: true })
+  if (!supabase.isConfigured() || !supabase.hasSession()) return Promise.resolve({ skipped: true })
   emitStatus({ status: 'syncing', message: '正在同步', error: '' })
   return supabase.schedulePush(store.getState()).then((result) => {
     emitStatus({ status: 'synced', message: '已同步', lastSyncedAt: new Date().toISOString(), error: '' })
@@ -81,6 +130,13 @@ function mutate(method) {
   }
 }
 
+function logout() {
+  const session = store.logout()
+  supabase.signOut().catch(() => {})
+  emitStatus({ status: 'waiting-login', message: '等待微信登录', error: '' })
+  return session
+}
+
 function getSyncStatus() {
   return Object.assign({}, syncStatus)
 }
@@ -95,13 +151,14 @@ module.exports = {
   mode: supabase.isConfigured() ? 'supabase' : 'local',
   initialize,
   whenReady,
+  loginWithWechat,
   scheduleSync,
   getSyncStatus,
   onSyncStatus,
   getState: store.getState,
   getSession: store.getSession,
   login: mutate('login'),
-  logout: mutate('logout'),
+  logout,
   getDashboard: store.getDashboard,
   listProperties: store.listProperties,
   listRooms: store.listRooms,

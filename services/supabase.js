@@ -1,6 +1,7 @@
 const config = require('./supabase.config')
 
-const SESSION_STORAGE_KEY = 'rentflow_supabase_session_v1'
+const SESSION_STORAGE_KEY = 'rentflow_supabase_session_v2'
+const LEGACY_SESSION_STORAGE_KEY = 'rentflow_supabase_session_v1'
 const DEFAULT_TABLE = 'app_states'
 
 let remoteRevision = 0
@@ -52,6 +53,7 @@ function request(options) {
         const error = new Error(message)
         error.statusCode = response.statusCode
         error.payload = response.data
+        error.code = response.data && response.data.code ? response.data.code : ''
         reject(error)
       },
       fail(error) {
@@ -66,6 +68,10 @@ function readSession() {
   return session && session.accessToken && session.refreshToken && session.userId ? session : null
 }
 
+function hasSession() {
+  return Boolean(readSession())
+}
+
 function persistSession(payload) {
   const source = payload && payload.session ? payload.session : payload
   const user = (payload && payload.user) || (source && source.user) || {}
@@ -75,10 +81,17 @@ function persistSession(payload) {
     refreshToken: source.refresh_token,
     expiresAt: Date.now() + Math.max(60, Number(source.expires_in) || 3600) * 1000,
     userId: user.id,
-    isAnonymous: Boolean(user.is_anonymous)
+    provider: 'wechat'
   }
   wx.setStorageSync(SESSION_STORAGE_KEY, session)
+  wx.removeStorageSync(LEGACY_SESSION_STORAGE_KEY)
   return session
+}
+
+function authRequiredError(message) {
+  const error = new Error(message || '请先使用微信登录')
+  error.code = 'AUTH_REQUIRED'
+  return error
 }
 
 function refreshSession(session) {
@@ -89,25 +102,26 @@ function refreshSession(session) {
   }).then(persistSession)
 }
 
-function createAnonymousSession() {
+function signInWithWechat(code) {
+  const loginCode = String(code || '').trim()
+  const functionName = /^[a-z0-9-]+$/i.test(String(config.wechatLoginFunction || '')) ? config.wechatLoginFunction : 'wechat-login'
+  if (!loginCode) return Promise.reject(new Error('微信登录凭证为空，请重试'))
   return request({
-    path: '/auth/v1/signup',
+    path: `/functions/v1/${functionName}`,
     method: 'POST',
-    data: { data: { client: 'wechat-mini-program', app: 'rentflow' } }
+    data: { code: loginCode }
   }).then(persistSession)
 }
 
 function ensureSession() {
   const session = readSession()
-  if (session && session.expiresAt > Date.now() + 60000) return Promise.resolve(session)
-  if (session) {
-    return refreshSession(session).catch((error) => {
-      if (error.statusCode !== 400 && error.statusCode !== 401) throw error
-      wx.removeStorageSync(SESSION_STORAGE_KEY)
-      return createAnonymousSession()
-    })
-  }
-  return createAnonymousSession()
+  if (!session) return Promise.reject(authRequiredError())
+  if (session.expiresAt > Date.now() + 60000) return Promise.resolve(session)
+  return refreshSession(session).catch((error) => {
+    if (error.statusCode !== 400 && error.statusCode !== 401) throw error
+    clearSession()
+    throw authRequiredError('微信登录已过期，请重新登录')
+  })
 }
 
 function tableName() {
@@ -141,9 +155,9 @@ function pushStateNow(state, session) {
   })
 }
 
-async function bootstrap(localState) {
+async function bootstrap(localState, providedSession) {
   if (!isConfigured()) return { configured: false, source: 'local', state: localState }
-  const session = await ensureSession()
+  const session = providedSession || await ensureSession()
   const remote = await pullState(session)
   if (remote && remote.state) return { configured: true, source: 'remote', state: remote.state, session, revision: remote.revision }
   const saved = await pushStateNow(localState, session)
@@ -181,6 +195,7 @@ async function flushPushQueue() {
 
 function schedulePush(state) {
   if (!isConfigured()) return Promise.resolve({ skipped: true })
+  if (!hasSession()) return Promise.resolve({ skipped: true, reason: 'auth-required' })
   pendingState = clone(state)
   clearTimeout(pushTimer)
   pushTimer = setTimeout(flushPushQueue, Number(config.pushDebounce) || 500)
@@ -189,16 +204,27 @@ function schedulePush(state) {
 
 function clearSession() {
   wx.removeStorageSync(SESSION_STORAGE_KEY)
+  wx.removeStorageSync(LEGACY_SESSION_STORAGE_KEY)
   remoteRevision = 0
+}
+
+function signOut() {
+  const session = readSession()
+  clearSession()
+  if (!session) return Promise.resolve()
+  return request({ path: '/auth/v1/logout', method: 'POST', accessToken: session.accessToken }).catch(() => {})
 }
 
 module.exports = {
   isConfigured,
+  hasSession,
+  signInWithWechat,
   bootstrap,
   ensureSession,
   pullState,
   schedulePush,
   clearSession,
+  signOut,
   _request: request,
   _flushPushQueue: flushPushQueue
 }
