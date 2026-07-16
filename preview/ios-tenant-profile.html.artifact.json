@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/ios-tenant-profile.html",
+  "entry": "preview/ios-tenant-profile.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T15:22:18.688Z",
+  "updatedAt": "2026-07-14T15:22:18.688Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

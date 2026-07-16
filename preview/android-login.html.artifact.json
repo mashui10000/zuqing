@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/android-login.html",
+  "entry": "preview/android-login.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T14:54:32.602Z",
+  "updatedAt": "2026-07-14T14:54:32.602Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

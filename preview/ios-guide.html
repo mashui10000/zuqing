@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>租清 · iOS 房东操作指南</title>
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+  <div class="app ios" data-od-id="ios-landlord-guide">
+    <header class="statusbar" aria-hidden="true">
+      <span>9:41</span>
+      <span class="status-icons"><i></i><i></i><i></i></span>
+    </header>
+
+    <nav class="topbar" aria-label="页面导航" data-od-id="ios-guide-topbar">
+      <a class="icon-button" href="../mobile-ios.html" aria-label="返回房东工作台">
+        <span class="chevron" aria-hidden="true">‹</span>
+      </a>
+      <div class="topbar-title">操作指南</div>
+      <span class="topbar-spacer" aria-hidden="true"></span>
+    </nav>
+
+    <main class="content guide-content" data-od-id="ios-guide-content">
+      <header class="guide-hero" data-od-id="ios-guide-hero">
+        <p class="eyebrow">房东工作流</p>
+        <h1 class="title">把每月收租走顺</h1>
+        <p class="subtitle">第一次使用，照着下面 5 步完成新增房间、入住、出账和收款。</p>
+      </header>
+
+      <section class="surface guide-summary" aria-labelledby="ios-guide-summary-title" data-od-id="ios-guide-summary">
+        <div class="guide-summary-head">
+          <span class="guide-summary-mark" aria-hidden="true">要</span>
+          <div>
+            <p class="guide-kicker">先记住两条</p>
+            <h2 id="ios-guide-summary-title">日期由房东定，账单抄表即生成</h2>
+          </div>
+        </div>
+        <ul class="guide-summary-list">
+          <li>入住日期由房东选择，租客只填写入住人员资料。</li>
+          <li>保存抄表读数后立即出账，到提醒日才通知租客。</li>
+        </ul>
+      </section>
+
+      <section class="guide-process" aria-labelledby="ios-guide-process-title" data-od-id="ios-guide-process">
+        <div class="guide-list-head">
+          <p class="guide-kicker">完整流程</p>
+          <h2 id="ios-guide-process-title">5 步完成一次收租</h2>
+        </div>
+
+        <ol class="guide-step-list">
+          <li>
+            <article class="surface guide-step" data-od-id="ios-guide-step-room">
+              <span class="guide-step-index" aria-hidden="true">01</span>
+              <div>
+                <h3>批量新增房间并设置收费</h3>
+                <p>填写楼层数量和每层房间数即可生成房间号，位置与统一收费只填一次。</p>
+                <a class="guide-step-action" href="ios-room-create.html">
+                  <span>去新增房间</span><span aria-hidden="true">›</span>
+                </a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="surface guide-step" data-od-id="ios-guide-step-tenant">
+              <span class="guide-step-index" aria-hidden="true">02</span>
+              <div>
+                <h3>确认日期并邀请入住</h3>
+                <p>房东先选择入住日期，再邀请租客填写入住人数和人员资料。</p>
+                <a class="guide-step-action" href="ios-room-profile.html">
+                  <span>去房间资料</span><span aria-hidden="true">›</span>
+                </a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="surface guide-step" data-od-id="ios-guide-step-meter">
+              <span class="guide-step-index" aria-hidden="true">03</span>
+              <div>
+                <h3>每月抄表并立即出账</h3>
+                <p>保存读数后立即生成账单；首次录入作为水电基准。</p>
+                <a class="guide-step-action" href="ios-meter.html">
+                  <span>去本月抄表</span><span aria-hidden="true">›</span>
+                </a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="surface guide-step" data-od-id="ios-guide-step-bill">
+              <span class="guide-step-index" aria-hidden="true">04</span>
+              <div>
+                <h3>查看账单与到期提醒</h3>
+                <p>账单抄表后即可查看，到提醒日才通知租客。</p>
+                <a class="guide-step-action" href="ios-bills.html">
+                  <span>去账单管理</span><span aria-hidden="true">›</span>
+                </a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="surface guide-step" data-od-id="ios-guide-step-checkout">
+              <span class="guide-step-index" aria-hidden="true">05</span>
+              <div>
+                <h3>确认收款或办理退租</h3>
+                <p>到账后确认收款；退租时用押金减去扣款，得到应退金额。</p>
+                <button class="guide-step-action" type="button" data-toast="请在小程序中选择需要退租的房间">
+                  <span>了解退租结算</span><span aria-hidden="true">›</span>
+                </button>
+              </div>
+            </article>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+  <script src="shared.js"></script>
+</body>
+</html>

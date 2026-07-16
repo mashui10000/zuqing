@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/home/home",
+    "pages/properties/index",
+    "pages/property/detail",
+    "pages/room/form/index",
+    "pages/guide/index",
+    "pages/bills/index",
+    "pages/bill/detail",
+    "pages/stats/index",
+    "pages/checkout/index",
+    "pages/tenant/home",
+    "pages/tenant/profile/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "租清",
+    "navigationBarBackgroundColor": "#F5F5F7",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F5F7",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#6E6E73",
+    "selectedColor": "#0071E3",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "工作台" },
+      { "pagePath": "pages/properties/index", "text": "房间" },
+      { "pagePath": "pages/bills/index", "text": "账单" },
+      { "pagePath": "pages/stats/index", "text": "月结" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

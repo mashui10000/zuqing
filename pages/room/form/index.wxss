@@ -1,0 +1,41 @@
+.room-create-page { padding-bottom: calc(48rpx + env(safe-area-inset-bottom)); }
+.form-card { padding: 26rpx; }
+.location-form > view + view { margin-top: 22rpx; }
+.optional { color: var(--muted); font-size: 20rpx; }
+.section-heading { margin-top: 32rpx; }
+.section-heading .section-title { margin: 0; }
+.room-count { color: var(--primary); font-size: 22rpx; font-weight: 680; }
+.batch-room-card { display: flex; flex-direction: column; }
+.generator-heading { min-height: 44rpx; }
+.generator-heading .label, .room-list-heading .label { margin-bottom: 0; color: var(--fg); font-weight: 680; }
+.generator-rule { color: var(--muted); font-size: 19rpx; }
+.floor-plan-list { margin-top: 12rpx; overflow: hidden; border: 1rpx solid var(--border); border-radius: 16rpx; background: var(--surface); }
+.floor-plan-row { box-sizing: border-box; min-height: 88rpx; padding: 0 18rpx; display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.floor-plan-row + .floor-plan-row { border-top: 1rpx solid var(--border); }
+.generator-label { color: var(--fg); font-size: 22rpx; font-weight: 620; white-space: nowrap; }
+.floor-plan-control { min-width: 0; display: flex; align-items: center; justify-content: flex-end; gap: 8rpx; }
+.floor-plan-input { box-sizing: border-box; width: 132rpx; min-height: 88rpx; padding: 0 8rpx; border: 0; border-radius: 0; background: transparent; text-align: right; }
+.floor-plan-unit { flex: none; color: var(--muted); font-size: 20rpx; }
+.generate-button { width: 100%; margin-top: 18rpx; background: var(--primary-soft); }
+.generator-preview { display: block; margin-top: 10rpx; color: var(--muted); font-size: 20rpx; line-height: 1.4; }
+.generator-preview.is-ready { color: var(--primary); font-weight: 650; }
+.room-list-section { margin-top: 24rpx; padding-top: 24rpx; border-top: 1rpx solid var(--border); }
+.room-list-heading { margin-bottom: 14rpx; }
+.room-names-input { box-sizing: border-box; width: 100%; min-height: 210rpx; max-height: 540rpx; padding: 20rpx 22rpx; line-height: 1.65; }
+.batch-tip { color: var(--muted); font-size: 21rpx; line-height: 1.5; }
+.room-list-section .batch-tip { display: block; margin-top: 12rpx; }
+.move-in-heading { margin-bottom: 16rpx; }
+.move-in-heading > view { flex: 1; }
+.move-in-heading .label { margin-bottom: 4rpx; color: var(--fg); font-weight: 680; }
+.move-in-note { display: block; color: var(--muted); font-size: 20rpx; line-height: 1.4; }
+.date-clear { flex: none; min-height: 88rpx; margin: 0; padding: 0 22rpx; border-radius: 44rpx; background: var(--primary-soft); color: var(--primary); font-size: 21rpx; line-height: 88rpx; }
+.date-clear::after { border: 0; }
+.date-picker-field { box-sizing: border-box; justify-content: space-between; }
+.date-placeholder { color: var(--muted); font-family: inherit; }
+.picker-arrow { color: var(--muted); font-size: 34rpx; }
+.fee-form .form-grid { flex-direction: column; gap: 22rpx 18rpx; }
+.fee-form .form-grid > view { width: 100%; flex: 0 0 auto; }
+.billing-note { margin-top: 24rpx; padding: 22rpx; border-radius: 22rpx; background: var(--primary-soft); }
+.billing-note .total { color: var(--primary); font-size: 32rpx; font-weight: 760; }
+.billing-note .muted { display: block; margin-top: 10rpx; font-size: 21rpx; line-height: 1.55; }
+.submit-button { width: 100%; margin-top: 28rpx; }

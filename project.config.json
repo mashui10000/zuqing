@@ -1,0 +1,51 @@
+{
+    "description": "租清房租水电管理微信小程序",
+    "packOptions": {
+        "ignore": [
+            {
+                "value": "preview",
+                "type": "folder"
+            },
+            {
+                "value": "critique.json",
+                "type": "file"
+            }
+        ],
+        "include": []
+    },
+    "setting": {
+        "urlCheck": false,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "minified": true,
+        "coverView": true,
+        "showShadowRootInWxmlPanel": true,
+        "compileWorklet": false,
+        "uglifyFileName": false,
+        "uploadWithSourceMap": true,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true,
+        "minifyWXML": true,
+        "localPlugins": false,
+        "disableUseStrict": false,
+        "useCompilerPlugins": false,
+        "condition": false,
+        "swc": false,
+        "disableSWC": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        }
+    },
+    "compileType": "miniprogram",
+    "libVersion": "3.7.12",
+    "appid": "wxc429db1ed3014bf0",
+    "projectname": "rentflow-mini",
+    "simulatorType": "wechat",
+    "condition": {},
+    "simulatorPluginLibVersion": {},
+    "editorSetting": {}
+}

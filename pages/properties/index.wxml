@@ -1,0 +1,59 @@
+<view class="page-shell" data-od-id="room-list">
+  <view class="page-head">
+    <view>
+      <view class="page-title">房间</view>
+      <view class="page-subtitle">{{rooms.length}} 间 · {{occupiedCount}} 间在租 · {{vacantCount}} 间空置</view>
+    </view>
+    <button class="btn btn-secondary btn-sm pressable" hover-class="button-hover" bindtap="openRoomCreate" data-od-id="add-room-entry">新增房间</button>
+  </view>
+
+  <view wx:if="{{!rooms.length}}" class="surface empty room-empty" data-od-id="room-empty-state">
+    <view class="empty-mark">房</view>
+    <view class="empty-title">还没有房间</view>
+    <text class="muted">新增房间时直接填写位置、月租、押金和水电单价。</text>
+    <button class="btn btn-primary pressable" hover-class="button-hover" bindtap="openRoomCreate">新增第一个房间</button>
+  </view>
+
+  <view wx:if="{{rooms.length}}" class="room-filters" data-od-id="room-filters">
+    <text class="room-filter-label">位置</text>
+    <scroll-view scroll-x class="room-filter-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="room-filter-row">
+        <view wx:for="{{locationFilters}}" wx:key="value" class="room-filter-hit {{selectedLocationId === item.value ? 'active' : ''}} pressable" hover-class="button-hover" data-value="{{item.value}}" bindtap="chooseLocation" aria-role="button" aria-pressed="{{selectedLocationId === item.value}}" data-od-id="room-location-filter-{{index}}">
+          <view class="room-filter-pill location-pill"><text>{{item.label}}</text><text class="room-filter-count">{{item.count}}</text></view>
+        </view>
+      </view>
+    </scroll-view>
+    <text class="room-filter-label room-filter-label-secondary">状态</text>
+    <scroll-view scroll-x class="room-filter-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="room-filter-row">
+        <view wx:for="{{statusFilters}}" wx:key="value" class="room-filter-hit {{activeRoomStatus === item.value ? 'active' : ''}} pressable" hover-class="button-hover" data-value="{{item.value}}" bindtap="chooseRoomStatus" aria-role="button" aria-pressed="{{activeRoomStatus === item.value}}" data-od-id="room-status-filter-{{index}}">
+          <view class="room-filter-pill status-pill"><text>{{item.label}}</text><text class="room-filter-count">{{item.count}}</text></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{rooms.length && !visibleRooms.length}}" class="surface empty room-filter-empty" data-od-id="room-filter-empty">
+    <view class="empty-title">没有符合条件的房间</view>
+    <text class="muted">换一个位置或状态，也可以直接查看全部房间。</text>
+    <button class="btn btn-plain pressable" hover-class="button-hover" bindtap="resetRoomFilters" data-od-id="reset-room-filters">查看全部房间</button>
+  </view>
+
+  <view wx:for="{{visibleRooms}}" wx:key="id" class="surface room-card pressable" hover-class="button-hover" bindtap="openRoom" data-id="{{item.id}}" data-od-id="room-{{item.id}}" aria-role="button" aria-label="{{item.locationName}}，{{item.name}}房间，{{item.statusText}}，月租{{item.rent}}元">
+    <view class="between room-card-head">
+      <view class="room-identity">
+        <view class="room-name">{{item.name}}</view>
+        <text class="status {{item.status === 'occupied' ? 'status-paid' : 'status-draft'}}">{{item.statusText}}</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+    <view class="between room-card-foot">
+      <view>
+        <text wx:if="{{item.tenantName}}">{{item.tenantName}} · {{item.occupantCount}} 人入住</text>
+        <text wx:else class="muted">暂无租客</text>
+        <text wx:if="{{item.tenantName && item.moveInDateDisplay}}" class="muted lease-summary">{{item.moveInDateDisplay}}入住 · 每月{{item.collectionDay}}日收租</text>
+      </view>
+      <text class="mono room-rent">¥{{item.rent}} / 月</text>
+    </view>
+  </view>
+</view>

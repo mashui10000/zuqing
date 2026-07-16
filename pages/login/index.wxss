@@ -1,0 +1,26 @@
+.login-page { width: 100%; min-height: 100vh; padding: calc(56rpx + env(safe-area-inset-top)) 34rpx calc(38rpx + env(safe-area-inset-bottom)); display: flex; flex-direction: column; background: var(--bg); }
+.login-brand { display: flex; align-items: center; gap: 14rpx; font-size: 29rpx; font-weight: 740; letter-spacing: -0.5rpx; }
+.brand-mark { width: 64rpx; height: 64rpx; display: grid; place-items: center; border-radius: 19rpx; background: var(--primary); color: #FFFFFF; font-size: 28rpx; box-shadow: 0 12rpx 30rpx rgba(0,113,227,.18); }
+.login-copy { margin-top: 84rpx; }
+.login-title { margin-top: 14rpx; font-size: 64rpx; line-height: 1.02; letter-spacing: -2.8rpx; font-weight: 780; }
+.login-subtitle { max-width: 610rpx; margin-top: 20rpx; color: var(--muted); font-size: 27rpx; line-height: 1.55; }
+.role-list { margin-top: 52rpx; display: flex; flex-direction: column; gap: 18rpx; }
+.role-choice { width: 100%; min-height: 132rpx; padding: 22rpx 24rpx; border: 2rpx solid rgba(210,210,215,.82); border-radius: 28rpx; display: flex; align-items: center; gap: 20rpx; text-align: left; background: rgba(255, 255, 255, 0.96); color: var(--fg); box-shadow: var(--shadow); }
+.role-choice.selected { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 6rpx var(--primary-soft); }
+.role-symbol { width: 72rpx; height: 72rpx; flex: 0 0 auto; display: grid; place-items: center; border-radius: 22rpx; background: var(--primary-soft); color: var(--primary); font-size: 27rpx; font-weight: 760; }
+.role-symbol.tenant { background: var(--surface-muted); color: var(--muted); }
+.role-copy { min-width: 0; flex: 1 1 auto; }
+.role-name { font-size: 30rpx; line-height: 1.2; font-weight: 720; }
+.role-copy text { display: block; margin-top: 7rpx; color: var(--muted); font-size: 23rpx; line-height: 1.4; }
+.role-radio { width: 38rpx; height: 38rpx; flex: 0 0 auto; display: grid; place-items: center; border: 3rpx solid var(--muted); border-radius: 50%; }
+.role-choice.selected .role-radio { border-color: var(--primary); }
+.role-choice.selected .role-radio view { width: 20rpx; height: 20rpx; border-radius: 50%; background: var(--primary); }
+.selected-note { min-height: 66rpx; padding: 18rpx 4rpx 0; color: var(--muted); font-size: 22rpx; line-height: 1.45; }
+.login-actions { margin-top: auto; padding-top: 36rpx; display: flex; flex-direction: column; gap: 16rpx; }
+.full { width: 100%; }
+.privacy-note { margin: 22rpx auto 0; max-width: 620rpx; color: var(--muted); text-align: center; font-size: 20rpx; line-height: 1.5; }
+
+@media (max-height: 700px) {
+  .login-copy { margin-top: 48rpx; }
+  .role-list { margin-top: 34rpx; }
+}

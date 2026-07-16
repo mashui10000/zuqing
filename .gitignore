@@ -1,0 +1,13 @@
+# Local agent and design-tool workspace metadata
+.agents/
+.codex/
+.file-versions/
+.od-skills/
+
+# WeChat DevTools user-specific settings
+project.private.config.json
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+Desktop.ini

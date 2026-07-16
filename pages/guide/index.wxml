@@ -1,0 +1,16 @@
+<view class="page-shell guide-page" data-od-id="landlord-guide">
+  <view class="page-head"><view><text class="eyebrow">从建房到收款</text><view class="page-title">房东操作指南</view><view class="page-subtitle">按下面顺序操作，第一次使用也不会漏步骤。</view></view></view>
+
+  <view class="surface guide-hero">
+    <view class="guide-progress"><view class="progress-line"></view><view class="progress-dot active">1</view><view class="progress-dot">2</view><view class="progress-dot">3</view><view class="progress-dot">4</view><view class="progress-dot">5</view></view>
+    <view class="guide-hero-title">一个月的收租流程</view><text class="muted">建房间 → 邀请入住 → 抄表 → 出账 → 收款或退租</text>
+  </view>
+
+  <view class="guide-list">
+    <view class="surface guide-step" data-od-id="guide-step-room"><view class="step-number">01</view><view class="step-copy"><view class="step-title">批量新增房间并设置收费</view><text class="muted">填写楼层数量和每层房间数即可生成房间号；位置与统一收费只填一次，保存后仍可单独修改。</text><button class="btn btn-secondary btn-sm pressable" hover-class="button-hover" bindtap="openRoomCreate">去新增房间</button></view></view>
+    <view class="surface guide-step" data-od-id="guide-step-tenant"><view class="step-number">02</view><view class="step-copy"><view class="step-title">确认日期并邀请入住</view><text class="muted">房东先在房间页选择入住日期，再发送给租客；租客只填写人数和人员资料。</text><button class="btn btn-plain btn-sm pressable" hover-class="button-hover" bindtap="openRooms">去房间管理</button></view></view>
+    <view class="surface guide-step" data-od-id="guide-step-meter"><view class="step-number">03</view><view class="step-copy"><view class="step-title">在房间页抄表并立即出账</view><text class="muted">打开对应房间直接填写水电读数；首次补填一次上期读数，之后系统自动带入。</text><button class="btn btn-plain btn-sm pressable" hover-class="button-hover" bindtap="openRooms">去选择房间</button></view></view>
+    <view class="surface guide-step" data-od-id="guide-step-bill"><view class="step-number">04</view><view class="step-copy"><view class="step-title">查看账单与收租提醒</view><text class="muted">每间房按入住日计算收租日；系统会在提醒日期通知已绑定微信的租客。</text><button class="btn btn-plain btn-sm pressable" hover-class="button-hover" bindtap="openBills">去账单管理</button></view></view>
+    <view class="surface guide-step" data-od-id="guide-step-checkout"><view class="step-number">05</view><view class="step-copy"><view class="step-title">确认收款或办理退租</view><text class="muted">收到租金后确认收款；退租时按押金减扣款计算退款，并将房间恢复为空置。</text><button class="btn btn-plain btn-sm pressable" hover-class="button-hover" bindtap="openCheckout">去退租结算</button></view></view>
+  </view>
+</view>

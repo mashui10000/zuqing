@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/android-bills.html",
+  "entry": "preview/android-bills.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T13:51:03.513Z",
+  "updatedAt": "2026-07-14T13:51:03.513Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

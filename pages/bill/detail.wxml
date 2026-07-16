@@ -1,0 +1,35 @@
+<view class="page-shell" wx:if="{{bill}}" data-od-id="bill-detail">
+  <view class="surface receipt">
+    <view class="between"><text class="eyebrow">{{bill.periodDisplay}} 账单</text><text class="status {{bill.statusClass}}">{{bill.statusText}}</text></view>
+    <view class="bill-place">{{bill.propertyName}} · {{bill.roomName}}</view>
+    <text class="muted">租客 {{bill.tenant.name}} · {{bill.dueDateDisplay}}收租</text>
+    <view class="total mono">¥{{bill.total}}</view>
+    <view class="divider"></view>
+    <view class="fee-row"><text>房租</text><text class="mono">¥{{bill.rent}}</text></view>
+    <view class="fee-row"><text>水费 <text class="muted">{{bill.waterUsage}} 吨</text></text><text class="mono">¥{{bill.waterFee}}</text></view>
+    <view class="fee-row"><text>电费 <text class="muted">{{bill.electricUsage}} 度</text></text><text class="mono">¥{{bill.electricFee}}</text></view>
+    <view wx:if="{{bill.otherFee}}" class="fee-row"><text>其他费用</text><text class="mono">¥{{bill.otherFee}}</text></view>
+    <view class="divider"></view>
+    <view class="fee-row strong"><text>应付合计</text><text class="mono">¥{{bill.total}}</text></view>
+  </view>
+
+  <view class="action-grid" data-od-id="bill-actions">
+    <button open-type="share" class="btn btn-plain pressable" hover-class="button-hover">{{isLandlord ? '分享给租客' : '分享账单'}}</button>
+    <button wx:if="{{isLandlord && (bill.status === 'due' || bill.status === 'overdue')}}" class="btn btn-secondary pressable" hover-class="button-hover" bindtap="remind">发送提醒</button>
+  </view>
+  <view wx:if="{{bill.status === 'draft'}}" class="surface paid-card"><view class="paid-mark">读</view><view><view>已自动结转到新月份</view><text class="muted">上期水电读数已带入，完成本期抄表后账单转为待收。</text></view></view>
+  <button wx:if="{{isLandlord && bill.status === 'draft'}}" class="btn btn-primary full pressable" hover-class="button-hover" bindtap="openRoomMeter">打开房间并录入水电</button>
+  <button wx:if="{{isLandlord && (bill.status === 'due' || bill.status === 'overdue')}}" class="btn btn-primary full pressable" hover-class="button-hover" bindtap="openPay">确认已收款</button>
+  <button wx:if="{{!isLandlord && (bill.status === 'due' || bill.status === 'overdue')}}" class="btn btn-primary full pressable" hover-class="button-hover" bindtap="payBill">立即支付</button>
+  <view wx:if="{{bill.status === 'paid'}}" class="surface paid-card"><view class="paid-mark">✓</view><view><view>{{isLandlord ? '已于' : '你已于'}} {{bill.paidAtDisplay}} {{isLandlord ? '收款' : '支付'}}</view><text class="muted">{{isLandlord ? '收款' : '支付'}}方式：{{bill.payMethod === 'cash' ? '现金' : '微信'}}</text></view></view>
+
+  <view wx:if="{{showPay && isLandlord}}" class="scrim" bindtap="closePay">
+    <view class="sheet" catchtap="stop" data-od-id="payment-sheet">
+      <view class="sheet-handle"></view><view class="sheet-title">确认收款方式</view>
+      <view class="stack">
+        <button class="btn btn-primary pressable" hover-class="button-hover" data-method="wechat" bindtap="markPaid">微信收款 · ¥{{bill.total}}</button>
+        <button class="btn btn-plain pressable" hover-class="button-hover" data-method="cash" bindtap="markPaid">现金或线下转账</button>
+      </view>
+    </view>
+  </view>
+</view>

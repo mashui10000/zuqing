@@ -1,0 +1,29 @@
+<view class="page-shell" data-od-id="profile-settings">
+  <view class="profile-head"><view class="avatar large">{{avatarText}}</view><view><view class="profile-name">{{displayName}}</view><text class="muted">{{state.profile.mobile ? state.profile.mobile + ' · ' : ''}}{{syncStatus.configured ? 'Supabase 云同步' : '本地数据模式'}}</text></view></view>
+  <view class="section-title">当前身份</view>
+  <view class="surface identity-card" data-od-id="current-identity">
+    <view><view class="identity-name">房东端</view><text class="muted">可管理房间、抄表、账单、收款与月结</text></view>
+    <text class="status status-paid">已登录</text>
+  </view>
+  <button class="btn btn-plain full pressable" hover-class="button-hover" bindtap="switchIdentity" data-od-id="switch-identity">切换身份或退出</button>
+  <view class="section-title">使用帮助</view>
+  <view class="surface card" data-od-id="landlord-help-list">
+  <view class="list-row pressable" hover-class="button-hover" bindtap="openRoomCreate" aria-role="button" aria-label="新增房间与收费"><view><view>新增房间与收费</view><text class="muted">填写月租、押金、水费与电费单价</text></view><text class="arrow">›</text></view>
+  <view class="list-row pressable" hover-class="button-hover" bindtap="openGuide" aria-role="button" aria-label="查看房东操作指南"><view><view>房东操作指南</view><text class="muted">查看完整的收租操作顺序</text></view><text class="arrow">›</text></view>
+  </view>
+  <view class="section-title">数据与迁移</view>
+  <view class="surface card">
+  <view class="list-row pressable" hover-class="button-hover" bindtap="copyBackup" aria-role="button" aria-label="导出本地备份"><view><view>导出本地备份</view><text class="muted">复制 JSON，可迁移到新设备</text></view><text class="arrow">›</text></view>
+  <view class="list-row pressable" hover-class="button-hover" bindtap="openImport" aria-role="button" aria-label="导入备份"><view><view>导入备份</view><text class="muted">恢复房间、租客、读数和账单</text></view><text class="arrow">›</text></view>
+    <view class="list-row" data-od-id="supabase-sync-status"><view><view>Supabase 同步</view><text class="muted">{{syncStatus.configured ? (syncStatus.error || '本地修改会自动上传，启动时自动拉取') : '填写公开密钥并执行建表 SQL 后启用'}}</text></view><text class="status {{syncStatus.status === 'error' ? 'status-overdue' : (syncStatus.status === 'synced' ? 'status-paid' : 'status-draft')}}">{{syncStatus.configured ? syncStatus.message : '待配置'}}</text></view>
+  </view>
+  <button class="btn btn-danger full pressable" hover-class="button-hover" bindtap="reset">清空全部数据</button>
+
+  <view wx:if="{{showImport}}" class="scrim" bindtap="closeImport">
+    <view class="sheet" catchtap="stop" data-od-id="restore-sheet">
+      <view class="sheet-handle"></view><view class="sheet-title">导入本地备份</view>
+      <textarea class="field field-area backup-area" placeholder="粘贴之前导出的 JSON 数据" value="{{backupText}}" bindinput="updateBackup"></textarea>
+      <button class="btn btn-primary full pressable" hover-class="button-hover" bindtap="importBackup">校验并恢复</button>
+    </view>
+  </view>
+</view>

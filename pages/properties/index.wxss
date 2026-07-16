@@ -1,0 +1,27 @@
+.room-filters { margin: 2rpx 0 22rpx; }
+.room-filter-label { display: block; margin: 0 0 4rpx 4rpx; color: var(--muted); font-size: 21rpx; font-weight: 620; }
+.room-filter-label-secondary { margin-top: 10rpx; }
+.room-filter-scroll { width: 100%; white-space: nowrap; }
+.room-filter-row { width: fit-content; min-width: 100%; padding: 0 28rpx 0 0; display: flex; align-items: center; justify-content: flex-start; gap: 12rpx; }
+.room-filter-hit { width: auto; min-width: 0; min-height: 80rpx; margin: 0; padding: 8rpx 0; flex: 0 0 auto; display: flex; align-items: center; line-height: 1; }
+.room-filter-pill { min-height: 64rpx; padding: 0 22rpx; display: inline-flex; align-items: center; justify-content: center; gap: 8rpx; border: 1rpx solid var(--border); border-radius: 32rpx; background: var(--surface); color: var(--fg); font-size: 23rpx; font-weight: 620; line-height: 1; white-space: nowrap; box-shadow: none; transition: background 150ms cubic-bezier(.28,0,.22,1), color 150ms cubic-bezier(.28,0,.22,1), border-color 150ms cubic-bezier(.28,0,.22,1); }
+.room-filter-hit.active .location-pill { border-color: var(--primary); background: var(--primary); color: var(--surface); box-shadow: 0 5rpx 14rpx rgba(0, 113, 227, 0.12); }
+.room-filter-hit.active .status-pill { border-color: var(--fg); background: var(--fg); color: var(--surface); }
+.room-filter-count { font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 19rpx; font-variant-numeric: tabular-nums; opacity: .68; }
+.room-filter-empty { margin-bottom: 18rpx; padding: 52rpx 28rpx; text-align: center; }
+.room-filter-empty .empty-title { color: var(--fg); font-size: 30rpx; font-weight: 720; }
+.room-filter-empty .muted { display: block; margin: 10rpx 0 24rpx; font-size: 23rpx; }
+.room-filter-empty .btn { min-width: 240rpx; }
+.room-card { margin-bottom: 18rpx; padding: 28rpx 30rpx; }
+.room-card-head { align-items: flex-start; }
+.room-identity { display: flex; align-items: center; gap: 14rpx; }
+.room-name { font-size: 36rpx; font-weight: 760; letter-spacing: -.02em; }
+.room-card-foot { margin-top: 20rpx; padding-top: 18rpx; gap: 18rpx; border-top: 1rpx solid var(--border); font-size: 22rpx; }
+.room-card-foot > view { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lease-summary { display: block; margin-top: 6rpx; font-size: 20rpx; }
+.room-rent { flex: 0 0 auto; color: var(--fg); font-weight: 700; }
+.room-empty { margin-top: 16rpx; padding: 68rpx 34rpx; text-align: center; }
+.room-empty .empty-mark { width: 76rpx; height: 76rpx; margin: 0 auto 18rpx; display: grid; place-items: center; border-radius: 24rpx; background: var(--surface-muted); color: var(--muted); font-weight: 680; }
+.room-empty .empty-title { color: var(--fg); font-size: 32rpx; font-weight: 720; }
+.room-empty .muted { display: block; margin: 10rpx 0 28rpx; font-size: 23rpx; line-height: 1.55; }
+.room-empty .btn { min-width: 250rpx; }

@@ -1,0 +1,14 @@
+.guide-page { padding-bottom: calc(48rpx + env(safe-area-inset-bottom)); }
+.guide-hero { padding: 30rpx; }
+.guide-progress { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.progress-line { position: absolute; left: 30rpx; right: 30rpx; top: 50%; height: 3rpx; transform: translateY(-50%); background: var(--border); }
+.progress-dot { position: relative; z-index: 1; width: 52rpx; height: 52rpx; display: grid; place-items: center; border-radius: 50%; background: var(--surface-muted); color: var(--muted); font-size: 21rpx; font-weight: 720; }
+.progress-dot.active { background: var(--primary); color: #FFFFFF; box-shadow: 0 0 0 10rpx var(--primary-soft); }
+.guide-hero-title { margin: 28rpx 0 8rpx; font-size: 32rpx; font-weight: 730; }
+.guide-hero .muted { font-size: 22rpx; }
+.guide-list { margin-top: 18rpx; display: grid; gap: 16rpx; }
+.guide-step { padding: 26rpx; display: flex; align-items: flex-start; gap: 22rpx; }
+.step-number { width: 58rpx; height: 58rpx; flex: 0 0 auto; display: grid; place-items: center; border-radius: 18rpx; background: var(--surface-muted); color: var(--muted); font: 650 21rpx "SFMono-Regular", Menlo, monospace; }
+.step-copy { min-width: 0; flex: 1 1 auto; }
+.step-title { font-size: 29rpx; font-weight: 720; }
+.step-copy .muted { display: block; margin: 8rpx 0 18rpx; font-size: 22rpx; line-height: 1.55; }

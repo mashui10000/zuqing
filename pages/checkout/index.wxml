@@ -1,0 +1,17 @@
+<view class="page-shell" data-od-id="checkout-settlement">
+  <view class="page-head"><view><view class="page-title">退租结算</view><view class="page-subtitle">核对押金与扣款后，将房间恢复为空置。</view></view></view>
+  <view class="surface card stack">
+    <view><text class="label">退租房间</text><picker range="{{roomLabels}}" value="{{selectedIndex}}" bindchange="selectRoom"><view class="field between"><text>{{roomLabels[selectedIndex] || '暂无在租房间'}}</text><text class="arrow">›</text></view></picker></view>
+    <view><text class="label">退租日期</text><picker mode="date" value="{{form.date}}" bindchange="changeDate"><view class="field between"><text class="mono">{{form.date}}</text><text class="arrow">›</text></view></picker></view>
+    <view class="form-grid">
+      <view><text class="label">押金</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.deposit}}" data-key="deposit" bindinput="updateForm" /></view>
+      <view><text class="label">扣款</text><input class="field field-input mono" type="digit" placeholder="0" value="{{form.deduction}}" data-key="deduction" bindinput="updateForm" /></view>
+    </view>
+    <view><text class="label">结算备注</text><textarea class="field field-area" placeholder="例如：门锁完好，扣除清洁费" data-key="note" bindinput="updateForm"></textarea></view>
+  </view>
+  <view class="surface refund-card">
+    <view><text class="label">应退押金</text><view class="metric mono">¥{{refund}}</view></view>
+    <text class="muted">押金 − 扣款</text>
+  </view>
+  <button class="btn btn-primary full pressable" hover-class="button-hover" bindtap="submit">确认退租并结清</button>
+</view>

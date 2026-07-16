@@ -1,0 +1,34 @@
+<view class="page-shell" wx:if="{{portal}}" data-od-id="tenant-portal">
+  <view class="tenant-head">
+    <view class="between"><text class="eyebrow">{{portal.property.name}} · {{portal.room.name}}</text><button class="identity-switch pressable" hover-class="button-hover" bindtap="switchIdentity" data-od-id="tenant-switch-identity">切换身份</button></view>
+    <view class="page-title">你好，{{portal.tenant.name}}</view>
+    <view class="page-subtitle">账单、水电明细和支付记录都在这里。</view>
+  </view>
+  <view class="section-title">入住资料</view>
+  <view class="surface tenant-profile-card pressable" hover-class="button-hover" bindtap="editProfile" data-od-id="tenant-profile-summary" aria-role="button" aria-label="查看或修改入住资料">
+    <view class="between"><view><view class="profile-card-title">{{portal.tenant.name}}</view><text class="muted">{{portal.tenant.mobile}}</text></view><text class="status {{portal.tenant.profileComplete ? 'status-paid' : 'status-due'}}">{{portal.tenant.profileComplete ? '资料完整' : '待补全'}}</text></view>
+    <view class="profile-details"><text>身份证 {{portal.tenant.idCardMasked}}</text><text>{{portal.tenant.occupantCount}} 人入住</text></view>
+    <view wx:if="{{portal.tenant.moveInDateDisplay}}" class="profile-details"><text>{{portal.tenant.moveInDateDisplay}}入住</text><text>每月{{portal.tenant.collectionDay}}日收租</text></view>
+    <view class="profile-action">{{portal.tenant.profileComplete ? '核对或更新全部住户' : '填写全部住户资料'}}<text class="arrow">›</text></view>
+  </view>
+  <view wx:if="{{portal.due > 0}}" class="surface due-card" data-od-id="tenant-due-summary">
+    <text class="label">待支付</text><view class="metric mono">¥{{portal.due}}</view>
+    <button class="btn btn-primary pressable" hover-class="button-hover" bindtap="payNow">立即支付</button>
+  </view>
+  <view class="section-title">账单记录</view>
+  <view class="surface card">
+    <view wx:if="{{!bills.length}}" class="empty tenant-bill-empty"><view class="empty-title">暂无账单</view><text>房东完成抄表后，账单会立即显示在这里。</text></view>
+    <view wx:for="{{bills}}" wx:key="id" class="list-row pressable" hover-class="button-hover" data-id="{{item.id}}" bindtap="openBill" aria-role="button" aria-label="{{item.periodDisplay}}账单，{{item.dueDateDisplay}}收租，{{item.statusText}}，{{item.total}}元">
+      <view><view class="bill-month">{{item.periodDisplay}}</view><text class="muted">{{item.dueDateDisplay}}收租</text></view>
+      <view class="row"><text class="mono">¥{{item.total}}</text><text class="status {{item.statusClass}}">{{item.statusText}}</text><text class="arrow">›</text></view>
+    </view>
+  </view>
+</view>
+<view class="page-shell tenant-empty" wx:else data-od-id="tenant-empty-state">
+  <view class="between"><text class="eyebrow">租客端</text><button class="identity-switch pressable" hover-class="button-hover" bindtap="switchIdentity">切换身份</button></view>
+  <view class="empty-panel surface">
+    <view class="empty-mark">租</view>
+    <view class="empty-title">尚未绑定房间</view>
+    <text class="muted">请通过房东发送的入住邀请进入并填写资料。绑定完成后，这里会显示你的账单和支付记录。</text>
+  </view>
+</view>

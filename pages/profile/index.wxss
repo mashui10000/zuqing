@@ -1,0 +1,9 @@
+.profile-head { padding: 18rpx 8rpx 8rpx; display: flex; align-items: center; gap: 20rpx; }
+.avatar.large { width: 96rpx; height: 96rpx; border-radius: 28rpx; }
+.profile-name { margin-bottom: 6rpx; font-size: 34rpx; font-weight: 720; }
+.identity-card { min-height: 116rpx; padding: 24rpx; display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.identity-card > view { min-width: 0; flex: 1 1 auto; }
+.identity-name { margin-bottom: 7rpx; font-size: 30rpx; font-weight: 720; }
+.identity-card .muted { font-size: 22rpx; line-height: 1.45; }
+.full { width: 100%; margin-top: 18rpx; }
+.backup-area { min-height: 280rpx; font-family: "SFMono-Regular", Menlo, monospace; font-size: 22rpx; }

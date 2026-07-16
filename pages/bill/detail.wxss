@@ -1,0 +1,10 @@
+.receipt { padding: 32rpx; margin-top: 8rpx; }
+.bill-place { margin: 30rpx 0 8rpx; font-size: 36rpx; font-weight: 720; }
+.total { margin: 42rpx 0 30rpx; font-size: 68rpx; line-height: 1; font-weight: 760; letter-spacing: -3rpx; }
+.fee-row { min-height: 64rpx; display: flex; align-items: center; justify-content: space-between; gap: 20rpx; }
+.fee-row.strong { font-size: 31rpx; font-weight: 720; }
+.action-grid { display: flex; gap: 14rpx; margin-top: 18rpx; }
+.action-grid > button { min-width: 0; flex: 1 1 0; }
+.full { width: 100%; margin-top: 16rpx; }
+.paid-card { margin-top: 18rpx; padding: 24rpx; display: flex; align-items: center; gap: 18rpx; }
+.paid-mark { width: 64rpx; height: 64rpx; display: grid; place-items: center; border-radius: 50%; color: var(--success); background: #E9F7EE; font-weight: 760; }

@@ -1,0 +1,28 @@
+<view class="page-shell with-fab" data-od-id="bill-list">
+  <view class="page-head"><view><view class="page-title">账单</view><view class="page-subtitle">待收合计 <text class="mono">¥{{total}}</text></view></view></view>
+  <view class="scope-tabs" data-od-id="bill-scope-tabs">
+    <view wx:for="{{scopes}}" wx:key="value" class="scope-tab {{scope === item.value ? 'active' : ''}} pressable" hover-class="button-hover" data-value="{{item.value}}" bindtap="chooseScope" aria-role="button" aria-pressed="{{scope === item.value}}"><text class="scope-tab-visual">{{item.label}}</text></view>
+  </view>
+  <scroll-view scroll-x class="filter-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="filter-row">
+    <view wx:for="{{filters}}" wx:key="value" class="chip {{active === item.value ? 'active' : ''}} pressable" hover-class="button-hover" data-value="{{item.value}}" bindtap="chooseFilter" aria-role="button" aria-pressed="{{active === item.value}}" aria-label="筛选{{item.label}}账单"><text class="chip-visual">{{item.label}}</text></view>
+    </view>
+  </scroll-view>
+  <view data-od-id="bill-results">
+    <view wx:for="{{billGroups}}" wx:key="key" wx:for-item="group" class="bill-group">
+      <view class="bill-group-head"><text class="bill-group-title">{{group.title}}</text><text class="bill-group-summary">{{group.summary}}</text></view>
+      <view class="surface card bill-group-card">
+        <view wx:for="{{group.bills}}" wx:key="id" wx:for-item="bill" class="list-row bill-row pressable" hover-class="button-hover" bindtap="openBill" data-id="{{bill.id}}" aria-role="button" aria-label="{{bill.roomName}}，{{bill.periodDisplay}}，{{bill.dueDateDisplay}}收租，{{bill.statusText}}，应收{{bill.total}}元">
+          <view class="bill-main">
+            <view class="row"><view class="bill-title">{{bill.roomName}}</view><text class="status {{bill.statusClass}}">{{bill.statusText}}</text></view>
+            <text class="muted">{{bill.tenantName}} · {{bill.periodDisplay}}</text>
+            <text class="collection-date">{{bill.dueDateDisplay}}收租</text>
+          </view>
+          <view class="bill-side"><text class="mono amount">¥{{bill.total}}</text><text class="arrow">›</text></view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{!bills.length}}" class="surface empty">{{emptyText}}</view>
+  </view>
+  <button class="fab pressable" hover-class="button-hover" bindtap="goRooms"><text class="fab-visual">选择房间抄表</text></button>
+</view>

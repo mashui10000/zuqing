@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/android-tenant.html",
+  "entry": "preview/android-tenant.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-07-14T13:51:03.527Z",
+  "updatedAt": "2026-07-14T13:51:03.527Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

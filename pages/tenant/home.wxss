@@ -1,0 +1,16 @@
+.tenant-head { padding-top: 12rpx; }
+.identity-switch { min-height: 88rpx; padding: 0 24rpx; border: 1rpx solid var(--border); border-radius: 999rpx; display: inline-flex; align-items: center; justify-content: center; background: var(--surface); color: var(--muted); font-size: 23rpx; }
+.tenant-profile-card { padding: 26rpx; }
+.profile-card-title { margin-bottom: 5rpx; font-size: 31rpx; font-weight: 720; }
+.profile-details { margin-top: 22rpx; padding: 18rpx 0; display: flex; flex-direction: column; gap: 9rpx; border-top: 1rpx solid var(--border); border-bottom: 1rpx solid var(--border); color: var(--muted); font-size: 22rpx; }
+.profile-action { min-height: 88rpx; padding-top: 12rpx; display: flex; align-items: center; justify-content: space-between; color: var(--primary); font-size: 23rpx; font-weight: 650; }
+.due-card { margin-top: 32rpx; padding: 32rpx; display: flex; flex-wrap: wrap; gap: 16rpx; align-items: center; justify-content: space-between; }
+.due-card .label { width: 100%; }
+.bill-month { font-weight: 680; }
+.tenant-bill-empty { padding: 54rpx 24rpx; }
+.tenant-bill-empty .empty-title { margin-bottom: 8rpx; color: var(--fg); font-size: 29rpx; font-weight: 700; }
+.tenant-empty { min-height: 70vh; }
+.empty-panel { margin-top: 44rpx; padding: 72rpx 34rpx; text-align: center; }
+.empty-mark { width: 80rpx; height: 80rpx; margin: 0 auto 22rpx; display: grid; place-items: center; border-radius: 26rpx; background: var(--surface-muted); color: var(--muted); font-weight: 680; }
+.empty-panel .empty-title { margin-bottom: 12rpx; font-size: 34rpx; font-weight: 720; }
+.empty-panel .muted { display: block; font-size: 23rpx; line-height: 1.65; }

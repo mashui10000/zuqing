@@ -1,0 +1,72 @@
+.room-overview { margin-top: 8rpx; padding: 30rpx; }
+.room-heading { align-items: flex-start; }
+.room-heading-actions { flex: 0 0 auto; display: flex; flex-direction: row; align-items: center; gap: 10rpx; }
+.room-edit-action { min-width: 112rpx; min-height: 88rpx; padding: 0 18rpx; border-radius: 999rpx; background: var(--primary-soft); line-height: 88rpx; white-space: nowrap; }
+.title { margin: 10rpx 0 8rpx; font-size: 42rpx; font-weight: 760; letter-spacing: -.02em; }
+.room-fee-grid { margin-top: 28rpx; padding-top: 24rpx; display: grid; grid-template-columns: 1fr 1fr; gap: 24rpx 18rpx; border-top: 1rpx solid var(--border); }
+.room-fee-grid > view { display: flex; flex-direction: column; gap: 6rpx; font-size: 24rpx; }
+.section-heading { margin-top: 38rpx; }
+.section-heading .section-title { margin: 0; }
+.lease-date-card { margin-top: 18rpx; padding: 20rpx 24rpx; box-shadow: none; }
+.lease-date-head { min-height: 88rpx; display: flex; align-items: center; justify-content: space-between; gap: 18rpx; }
+.lease-date-title { font-weight: 700; }
+.lease-date-card .muted { display: block; margin-top: 5rpx; font-size: 22rpx; }
+.lease-date-picker { min-width: 196rpx; height: 88rpx; padding: 0 20rpx; display: flex; align-items: center; justify-content: space-between; gap: 12rpx; border-radius: 22rpx; background: var(--primary-soft); color: var(--primary); font-weight: 720; }
+.lease-schedule { margin-top: 14rpx; padding-top: 18rpx; display: grid; grid-template-columns: 1fr 1fr; gap: 20rpx; border-top: 1rpx solid var(--border); }
+.lease-schedule > view { min-width: 0; display: flex; flex-direction: column; gap: 7rpx; font-size: 22rpx; }
+.lease-schedule .label { margin: 0; }
+.lease-schedule .mono { font-size: 23rpx; white-space: nowrap; }
+.lease-schedule .collection-value { color: var(--primary); font-weight: 720; }
+.occupant-list { margin-top: 18rpx; }
+.occupant-list-head { padding: 0 4rpx 12rpx; font-size: 23rpx; font-weight: 700; }
+.occupant-list-head text { color: var(--muted); font-weight: 500; }
+.room-occupant-card { margin-top: 12rpx; padding: 22rpx 24rpx; box-shadow: none; }
+.occupant-card-head { min-height: 64rpx; display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
+.occupant-name { min-width: 0; flex: 1 1 auto; display: block; overflow: hidden; font-size: 28rpx; font-weight: 720; line-height: 64rpx; text-overflow: ellipsis; white-space: nowrap; }
+.occupant-edit-action { width: 82rpx; flex: 0 0 82rpx; }
+.text-action { min-width: 88rpx; min-height: 88rpx; margin: 0; padding: 0 14rpx; border: 0; background: transparent; color: var(--primary); font-size: 22rpx; line-height: 88rpx; }
+.text-action::after { border: 0; }
+.occupant-detail { min-height: 58rpx; display: flex; align-items: center; justify-content: space-between; gap: 16rpx; border-top: 1rpx solid var(--border); font-size: 22rpx; }
+.occupant-detail:first-of-type { margin-top: 12rpx; }
+.occupant-detail .label { margin: 0; }
+.id-value { font-size: 22rpx; }
+.empty-profile { min-height: 150rpx; margin-top: 18rpx; padding: 24rpx; display: flex; align-items: center; gap: 20rpx; }
+.empty-profile .muted { display: block; margin-top: 7rpx; font-size: 22rpx; line-height: 1.45; }
+.empty-mark { width: 72rpx; height: 72rpx; flex: 0 0 auto; display: grid; place-items: center; border-radius: 22rpx; background: var(--surface-muted); color: var(--muted); font-weight: 680; }
+.meter-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18rpx; }
+.meter-period { color: var(--muted); font-size: 21rpx; }
+.room-meter-card { margin-top: 18rpx; padding: 24rpx; box-shadow: none; }
+.room-meter-head { gap: 18rpx; }
+.room-meter-head .muted { min-width: 0; flex: 1; font-size: 21rpx; line-height: 1.45; }
+.room-meter-grid { margin-top: 22rpx; display: grid; grid-template-columns: 1fr 1fr; gap: 18rpx; }
+.room-meter-kind { min-width: 0; padding: 18rpx; border-radius: 22rpx; background: var(--surface-muted); }
+.meter-kind-title { margin-bottom: 16rpx; font-size: 25rpx; font-weight: 720; }
+.meter-field-block + .meter-field-block { margin-top: 16rpx; }
+.meter-field-block .label { min-height: 52rpx; margin-bottom: 7rpx; display: flex; align-items: flex-end; font-size: 18rpx; line-height: 1.35; }
+.meter-field-block .field { width: 100%; min-width: 0; box-sizing: border-box; background: var(--surface); }
+.meter-readonly { justify-content: space-between; color: var(--fg); }
+.auto-mark { flex: 0 0 auto; padding: 6rpx 10rpx; border-radius: 999rpx; background: #E9F7EE; color: var(--success); font-size: 22rpx; font-weight: 680; }
+.meter-other-row { min-height: 94rpx; margin-top: 16rpx; padding-top: 12rpx; border-top: 1rpx solid var(--border); }
+.meter-other-input { width: 180rpx; height: 72rpx; padding: 0 18rpx; border-radius: 18rpx; background: var(--surface-muted); text-align: right; }
+.meter-save-button { margin-top: 12rpx; }
+.invite-note { margin: 22rpx 4rpx 0; color: var(--muted); font-size: 22rpx; line-height: 1.5; }
+.invite-note text { display: block; margin-bottom: 4rpx; color: var(--fg); font-weight: 680; }
+.room-actions { margin-top: 24rpx; padding-bottom: calc(24rpx + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14rpx; }
+.action-helper { margin: -4rpx 4rpx 2rpx; color: var(--muted); font-size: 22rpx; line-height: 1.45; text-align: center; }
+.toggle-row { padding: 22rpx 24rpx; display: flex; align-items: center; justify-content: space-between; gap: 18rpx; box-shadow: none; }
+.toggle-row .muted { font-size: 22rpx; }
+.occupant-edit-form { margin-top: 28rpx; }
+.date-field { justify-content: space-between; color: var(--fg); }
+.date-field .picker-arrow { color: var(--muted); font-size: 34rpx; }
+.room-edit-form { margin-top: 28rpx; }
+.room-edit-fees { display: grid; grid-template-columns: 1fr; gap: 20rpx 16rpx; }
+.room-edit-note { color: var(--muted); font-size: 22rpx; line-height: 1.5; }
+.field-input-error { border-color: var(--danger); background: #FFF7F7; }
+.form-error { padding: 18rpx 22rpx; border-radius: 18rpx; background: #FFECEE; color: var(--danger); font-size: 23rpx; line-height: 1.4; }
+.optional { color: var(--muted); font-size: 20rpx; }
+.full { width: 100%; }
+
+@media (max-width: 340px) {
+  .room-meter-grid { grid-template-columns: 1fr; }
+  .meter-field-block .label { min-height: 0; }
+}
